@@ -1,0 +1,25 @@
+:root {
+  /*
+    Variables de los colores principales de la biblioteca
+  */
+
+  --primary-color: #B8CDDE;
+  --secondary-color: #BCCDAD;
+  --tertiary-color: #99CC81;
+  --quaternary-color: #A8BB8F;
+
+  /*
+    Variables de los colores de texto de la biblioteca
+  */
+
+  --primary-text-color: #3A6E8A;
+  --secondary-text-color: #6C91A8;
+}
+
+/*
+  Variables de tipografía
+*/
+
+$fuente-principal: "Roboto", sans-serif;
+$grosor-normal: 400;
+$grosor-destacado: 900;
