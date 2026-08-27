@@ -1,0 +1,131 @@
+// Variables de color básicas
+$primary-color: #0056b3;
+$border-color: #e0e0e0;
+$bg-light: #f8f9fa;
+$text-dark: #333;
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background-color: #ffffff;
+}
+
+// Estilos de la parte superior
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  gap: 2rem;
+  border-bottom: 1px solid $border-color;
+
+  .logo-container {
+    h2 {
+      margin: 0;
+      color: $primary-color;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+
+  .search-container {
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+
+    input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 1px solid $border-color;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+      
+      &:focus {
+        border-color: $primary-color;
+      }
+    }
+
+    button {
+      padding: 0.6rem 1.5rem;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  .quick-links {
+    .bestsellers-link {
+      color: #ff5722; // Color distintivo para lo más vendido
+      text-decoration: none;
+      font-weight: 600;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .user-actions {
+    display: flex;
+    gap: 1rem;
+
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      color: $text-dark;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: $bg-light;
+        border-color: #ccc;
+      }
+    }
+  }
+}
+
+// Estilos para el espacio del Navbar inferior
+.header-navbar-container {
+  width: 100%;
+  background-color: $bg-light;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  
+  .placeholder-text {
+    color: #888;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+}
+
+// Responsividad básica
+@media (max-width: 768px) {
+  .header-main {
+    flex-wrap: wrap;
+    padding: 1rem;
+    
+    .search-container {
+      order: 3;
+      min-width: 100%;
+      margin-top: 1rem;
+    }
+  }
+}
