@@ -1,0 +1,23 @@
+@import "./variables.scss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: $fuente-principal;
+  font-optical-sizing: auto;
+  font-weight: $grosor-normal;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.roboto-grueso {
+  font-family: $fuente-principal;
+  font-optical-sizing: auto;
+  font-weight: $grosor-destacado;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
