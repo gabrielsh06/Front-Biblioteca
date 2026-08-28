@@ -1,6 +1,13 @@
 @import '../../../../scss/variables';
-	.public-footer--contenedorf{
-background-color: --seccondary-color;
+.public-footer--contenedorf{
+	background-color: --seccondary-color;
+	display: flex;
+	flex-wrap: wrap;
+	color: --primary-text-color;	
+}
+
+.public-foot-cj{
+	background-color: --primary-color;
 
 }
 	
