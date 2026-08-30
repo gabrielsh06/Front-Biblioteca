@@ -20,11 +20,13 @@
   background-color: --seccondary-color;
   display: flex;
   flex-wrap: wrap;
-  color: --primary-text-color; }
+  color: --primary-text-color;
+  margin: 40px; }
 
 .public-foot-cj {
   background-color: --primary-color;
   max-width: 100vm;
-  height: auto; }
+  height: auto;
+  gap: 10px; }
 
 /*# sourceMappingURL=footer.css.map */
