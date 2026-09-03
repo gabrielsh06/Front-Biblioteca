@@ -1,13 +1,28 @@
 @use "../../../../scss/base.scss";
+@use "../../../../scss/variables.scss" as *;
 
 .footer {
-    padding: 1.5rem;
-    background-color: #1a1a18;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    background-color: var(--bg-footer);
+    width: 100%;
+
+    &__container {
+        padding: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "brand"
+            "social"
+            "nav"
+            "map"
+            "divider"
+            "bottom";
+        gap: 2rem;
+    }
 
     &__col--brand {
+        grid-area: brand;
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
@@ -15,16 +30,18 @@
 
     &__brand-title {
         font-size: 1.5rem;
-        color: white;
-        @extend .roboto-grueso;
+        color: var(--text-on-dark);
+        @extend .font-title;
+        font-weight: $grosor-destacado;
     }
 
     &__brand-description {
         font-size: 1rem;
-        color: var(--secondary-text-color);
+        color: var(--text-muted);
     }
 
     &__social {
+        grid-area: social;
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
@@ -43,6 +60,7 @@
                     height: 24px;
                     display: block;
                     transition: transform 0.2s ease-in-out;
+                    color: #4A90E2;
 
                     &:hover {
                         transform: scale(1.15);
@@ -52,12 +70,21 @@
         }
     }
 
+    &__nav {
+        grid-area: nav;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
     &__col {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
 
         &--map {
+            grid-area: map;
+
             iframe {
                 width: 100%;
                 border-radius: 1rem;
@@ -69,7 +96,7 @@
 
     &__label {
         font-weight: bold;
-        color: var(--primary-text-color);
+        color: var(--text-accent);
     }
 
     &__list {
@@ -80,7 +107,7 @@
 
         a {
             text-decoration: none;
-            color: var(--secondary-text-color);
+            color: var(--text-muted);
 
             &:hover {
                 opacity: 0.5;
@@ -89,18 +116,55 @@
     }
 
     &__divider {
+        grid-area: divider;
         border: none;
         height: 1px;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: var(--color-border);
         margin: 1rem 0;
     }
 
     &__bottom {
+        grid-area: bottom;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        color: var(--secondary-text-color);
+        color: var(--text-muted);
         text-align: center;
         font-size: 0.75rem;
+    }
+
+    @include tablet {
+        &__container {
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                "brand social"
+                "nav map"
+                "divider divider"
+                "bottom bottom";
+        }
+
+        &__col--map {
+            iframe {
+                width: 100%;
+                border-radius: 1rem;
+                aspect-ratio: 4 / 3;
+                pointer-events: auto;
+            }
+        }
+    }
+
+    @include desktop {
+        &__container {
+            grid-template-columns: 1fr 1.5fr 1fr;
+            grid-template-areas:
+                "brand nav map"
+                "social nav map"
+                "divider divider divider"
+                "bottom bottom bottom";
+        }
+
+        &__nav {
+            grid-template-columns: 1fr 1fr;
+        }
     }
 }
