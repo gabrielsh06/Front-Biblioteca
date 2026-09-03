@@ -43,6 +43,24 @@
 }
 
 /*
+    Variables de responsive
+*/
+$screen-tablet: 768px;
+$screen-desktop: 1024px;
+
+/*
+    Variables de mixins
+*/
+
+@mixin tablet {
+  @media (min-width: #{$screen-tablet}) { @content; }
+}
+
+@mixin desktop {
+  @media (min-width: #{$screen-desktop}) { @content; }
+}
+
+/*
     Variables de tipografía
 */
 
