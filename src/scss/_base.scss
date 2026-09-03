@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@use "./variables.scss";
 
 * {
   box-sizing: border-box;
@@ -8,16 +8,21 @@
 
 body {
   font-family: $fuente-principal;
-  font-optical-sizing: auto;
   font-weight: $grosor-normal;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $fuente-titulos;
+  font-weight: $grosor-destacado;
+}
+
+.font-title {
+  font-family: $fuente-titulos;
 }
 
 .roboto-grueso {
   font-family: $fuente-principal;
-  font-optical-sizing: auto;
-  font-weight: $grosor-destacado;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
+  font-weight: $grosor-black;
 }
