@@ -1,0 +1,73 @@
+:root {
+
+    /*
+        Variables de los colores principales de la biblioteca
+    */
+
+    --color-ivory: #FDFBF7;
+    --color-forest: #2C4A3E;
+    --color-forest-light: #3D6355;
+    --color-terracotta: #D4A373;
+    --color-terracotta-light: #E8C9A0;
+    --color-terracotta-dark: #B8834A;
+    --color-ink: #1A1A18;
+    --color-muted: #6B6B62;
+    --color-border: #E8E3D9;
+    --color-surface: #F5F0E8;
+    --color-rose-blush: #F9EDE8;
+
+    /*
+        Variables de los colores de fondo de la biblioteca
+    */
+
+    --bg-body: var(--color-ivory);              /* Fondo general claro */
+    --bg-surface: var(--color-surface);         /* Buscador, tarjetitas */
+    --bg-dark-section: var(--color-forest);     /* Secciones verdes */
+    --bg-footer: var(--color-ink);              /* Fondo del footer */
+
+    /*
+        Variables de los colores de texto de la biblioteca
+    */
+
+    --text-primary: var(--color-ink);           /* Títulos oscuros sobre fondo claro */
+    --text-muted: var(--color-muted);           /* Textos secundarios o descriptivos */
+    --text-accent: var(--color-terracotta);      /* Subtítulos pequeños en mayúsculas */
+    --text-on-dark: var(--color-ivory);         /* Títulos sobre secciones verdes */
+
+    /*
+        Botones y Elementos interactivos
+    */
+    --btn-primary-bg: var(--color-terracotta-light);
+    --btn-primary-text: var(--color-ink);
+    --btn-outline-border: var(--color-ivory);
+}
+
+/*
+    Variables de responsive
+*/
+$screen-tablet: 768px;
+$screen-desktop: 1024px;
+
+/*
+    Variables de mixins
+*/
+
+@mixin tablet {
+  @media (min-width: #{$screen-tablet}) { @content; }
+}
+
+@mixin desktop {
+  @media (min-width: #{$screen-desktop}) { @content; }
+}
+
+/*
+    Variables de tipografía
+*/
+
+$fuente-principal: "Roboto", sans-serif;
+$fuente-titulos: "Playfair Display", serif;
+
+$grosor-normal: 400;
+$grosor-medio: 500;
+$grosor-destacado: 700;
+$grosor-black: 900;
