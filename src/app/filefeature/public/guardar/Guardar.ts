@@ -2,21 +2,12 @@
 
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+/* <GuardarDato> */
 @Component({
   selector: 'GuardarDato',
   imports: [RouterModule],
-template: `<label>Ingrese nombre</label> 
-             <br>
-<input #miInput (input)="inputnombre(miInput.value)">
-             <br>
-             <br>
-<label>Ingrese codigo</label>
-<input #mitwoInput (input)="InputDeviceInfo(mitwoInput.value)">
-<br>
-<button (click)="AccionarGuardado()">Guardar </button>
-`
-
+templateUrl: 'Guardar.html',
+styleUrl: 'guardar-stylo.scss'
 })
 export class GuardadorAni {
 grannombre = "";
