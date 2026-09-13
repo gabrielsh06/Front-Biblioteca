@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from '../../features/public/footer/footer';
+import { FooterComponent } from '../../footer/footer';
 
 @Component({
   selector: 'app-public-layout',
