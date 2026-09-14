@@ -15,8 +15,6 @@
     background-color: var(--color-ivory);
     border: none;
     border-radius: 0.5rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -33,6 +31,8 @@
         width: 100%;
         aspect-ratio: 2 / 3;
         overflow: hidden;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
 
         img {
             width: 100%;
