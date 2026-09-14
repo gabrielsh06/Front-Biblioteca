@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    box-sizing: border-box;
 
     &__header {
         display: flex;
@@ -24,20 +25,25 @@
         width: 100%;
         display: flex;
         align-items: center;
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 1rem;
+        box-sizing: border-box;
     }
 
     &__track {
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: calc(75% - 0.5rem);
-        align-items: stretch;
+        align-items: center;
         gap: 1rem;
         width: 100%;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         scrollbar-width: none;
-        padding: 0.5rem 0;
+        padding: 1.5rem 1.25rem;
+        scroll-padding-inline: 1.25rem;
+        box-sizing: border-box;
 
         &::-webkit-scrollbar {
             display: none;
@@ -48,6 +54,7 @@
         scroll-snap-align: start;
         height: 100%;
         display: flex;
+        box-sizing: border-box;
 
         app-book-card {
             width: 100%;
@@ -60,10 +67,11 @@
         display: none;
     }
 
-    @media (min-width: 768px) {
+    @include tablet {
         &__track {
-            grid-auto-columns: calc((100% - (2 * 1rem)) / 3);
+            grid-auto-columns: calc((100% - 3rem) / 4);
             gap: 1rem;
+            width: 100%;
         }
 
         &__arrow {
@@ -107,8 +115,9 @@
 
     @include desktop {
         &__track {
-            grid-auto-columns: calc((100% - (3 * 1.25rem)) / 4);
+            grid-auto-columns: calc((100% - 5rem) / 5);
             gap: 1.25rem;
+            width: 100%;
         }
 
         &__arrow {
