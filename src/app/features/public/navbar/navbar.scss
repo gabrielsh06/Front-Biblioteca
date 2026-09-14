@@ -285,6 +285,68 @@
         }
     }
 
+    // ---------- Franja de categorías de libros ----------
+    &__categories {
+        display: flex;
+        gap: 0.6rem;
+        padding: 0 1.5rem 0.85rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__category {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-shrink: 0;
+        text-decoration: none;
+        color: var(--text-primary);
+        font-size: 0.8rem;
+        font-weight: $grosor-medio;
+        white-space: nowrap;
+        padding: 0.45rem 0.9rem;
+        border-radius: 0.6rem;
+        background-color: var(--color-category-bg, var(--bg-surface));
+
+        // Paleta pastel alternada, en el mismo espíritu que las tarjetas del Figma.
+        &:nth-child(6n + 1) {
+            --color-category-bg: #dce9f5;
+        }
+        &:nth-child(6n + 2) {
+            --color-category-bg: #fbe8dc;
+        }
+        &:nth-child(6n + 3) {
+            --color-category-bg: #e2f0e1;
+        }
+        &:nth-child(6n + 4) {
+            --color-category-bg: #e6e4f7;
+        }
+        &:nth-child(6n + 5) {
+            --color-category-bg: #fbe3ea;
+        }
+        &:nth-child(6n + 6) {
+            --color-category-bg: #fcf3d6;
+        }
+
+        &:hover {
+            filter: brightness(0.97);
+        }
+
+        &--active {
+            outline: 2px solid var(--color-terracotta);
+            outline-offset: -2px;
+        }
+    }
+
+    &__category-icon {
+        font-size: 0.95rem;
+        line-height: 1;
+    }
+
     @include tablet {
         &__tagline {
             display: block;
