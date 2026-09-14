@@ -2,10 +2,11 @@ import { Component, input, output, computed, signal, inject } from '@angular/cor
 import { Location, CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Book, BOOK_STATUS_LABELS, BOOK_ORIGIN_LABELS } from '../../../../shared/models/book.model';
+import { BookCarousel } from '../../../../shared/components/book-carousel/book-carousel';
 
 @Component({
     selector: 'app-book-detail',
-    imports: [RouterModule, CommonModule],
+    imports: [RouterModule, CommonModule, BookCarousel],
     templateUrl: './book-detail.html',
     styleUrl: './book-detail.scss',
 })
@@ -13,6 +14,9 @@ export class BookDetail {
     private location = inject(Location);
 
     book = input.required<Book>();
+    authorBooks = input<Book[]>([]);
+    relatedBooks = input<Book[]>([]);
+
     reserve = output<string>();
     toggleFavoriteEvent = output<string>();
 

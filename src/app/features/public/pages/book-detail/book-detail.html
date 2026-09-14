@@ -147,6 +147,18 @@
             </div>
         </article>
         <section class="related-books">
+            @if (authorBooks().length > 0) {
+                <app-book-carousel
+                    [title]="'Más libros de ' + book().author"
+                    [books]="authorBooks()"
+                />
+            }
+            @if (relatedBooks().length > 0) {
+                <app-book-carousel
+                    [title]="'También te podría interesar'"
+                    [books]="relatedBooks()"
+                />
+            }
         </section>
     </div>
 </main>
