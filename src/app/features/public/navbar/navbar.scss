@@ -1,0 +1,80 @@
+@use '../../../../scss/base.scss';
+@use '../../../../scss/variables.scss' as *;
+
+:host {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nabvar {
+    background-color: var(--bg-body);
+    border-bottom: 1px solid var(--color-border);
+    width: 100%;
+
+    &__container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    // ---------- Marca ----------
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+
+    &__logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.375rem;
+        background: linear-gradient(
+            160deg,
+            var(--color-terracotta) 0%,
+            var(--color-terracotta-dark) 100%
+        );
+        color: var(--color-ivory);
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+
+    &__brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+
+    &__title {
+        @extend .font-title;
+        font-weight: $grosor-destacado;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+
+        em {
+            font-style: italic;
+            color: var(--text-accent);
+        }
+    }
+
+    &__tagline {
+        display: none;
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+}
