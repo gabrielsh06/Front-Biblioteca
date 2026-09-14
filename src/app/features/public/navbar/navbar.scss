@@ -77,4 +77,42 @@
         text-transform: uppercase;
         color: var(--text-muted);
     }
+    // ---------- Buscador ----------
+    &__search {
+        display: none;
+        flex: 1 1 auto;
+        max-width: 420px;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--bg-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+
+        &--mobile {
+            display: flex;
+            max-width: none;
+        }
+    }
+
+    &__search-icon {
+        width: 0.9rem;
+        height: 0.9rem;
+        color: var(--text-muted);
+        flex-shrink: 0;
+    }
+
+    &__search-input {
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        font-family: $fuente-principal;
+
+        &::placeholder {
+            color: var(--text-muted);
+        }
+    }
 }
