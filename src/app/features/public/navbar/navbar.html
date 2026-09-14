@@ -93,6 +93,21 @@
         </div>
     </div>
     
+    <nav class="navbar__categories" aria-label="Categorías de libros">
+        @for (category of categories; track category.slug) {
+            <a
+                class="navbar__category"
+                routerLink="/catalogo"
+                [queryParams]="{ categoria: category.slug }"
+                routerLinkActive="navbar__category--active"
+                [routerLinkActiveOptions]="{ exact: false, queryParams: 'exact', paths: 'subset' }"
+            >
+                <span class="navbar__category-icon">{{ category.icon }}</span>
+                <span>{{ category.label }}</span>
+            </a>
+        }
+    </nav>
+
     @if (isMobileMenuOpen()) {
         <div class="navbar__mobile-panel">
             <form class="navbar__search navbar__search--mobile" role="search">
