@@ -1,0 +1,17 @@
+@use "../../../../../scss/base.scss";
+@use "../../../../../scss/variables.scss" as *;
+
+.caja-terminoscondiciones{
+display: flex;
+display-wrap: wrap;
+text-align: center;
+align-items: center;
+jusstify-content: center;
+background-color: --bg-dark-section;
+}
+
+.caja-caja-terminoscondiciones{
+border: 2px solid;
+background-color: --bg-body;
+
+}
