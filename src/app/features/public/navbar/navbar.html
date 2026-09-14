@@ -34,5 +34,17 @@
                 aria-label="Buscar en el catálogo"
             />
         </form>
+        <nav class="navbar__links" aria-label="Categorías del catálogo">
+            @for (link of navLinks; track link.path) {
+                <a
+                    class="navbar__link"
+                    [routerLink]="link.path"
+                    routerLinkActive="navbar__link--active"
+                >
+                    {{ link.label }}
+                </a>
+            }
+        </nav>
+        
     </div>
 </header>
