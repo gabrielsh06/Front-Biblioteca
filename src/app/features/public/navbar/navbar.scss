@@ -1,0 +1,397 @@
+@use '../../../../scss/base.scss';
+@use '../../../../scss/variables.scss' as *;
+
+:host {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    background-color: var(--bg-body);
+    border-bottom: 1px solid var(--color-border);
+    width: 100%;
+
+    &__container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    // ---------- Marca ----------
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+
+    &__logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.375rem;
+        background: linear-gradient(
+            160deg,
+            var(--color-terracotta) 0%,
+            var(--color-terracotta-dark) 100%
+        );
+        color: var(--color-ivory);
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+
+    &__brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+
+    &__title {
+        @extend .font-title;
+        font-weight: $grosor-destacado;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+
+        em {
+            font-style: italic;
+            color: var(--text-accent);
+        }
+    }
+
+    &__tagline {
+        display: none;
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+    // ---------- Buscador ----------
+    &__search {
+        display: none;
+        flex: 1 1 auto;
+        max-width: 420px;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--bg-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+
+        &--mobile {
+            display: flex;
+            max-width: none;
+        }
+    }
+
+    &__search-icon {
+        width: 0.9rem;
+        height: 0.9rem;
+        color: var(--text-muted);
+        flex-shrink: 0;
+    }
+
+    &__search-input {
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        font-family: $fuente-principal;
+
+        &::placeholder {
+            color: var(--text-muted);
+        }
+    }
+
+    // ---------- Links ----------
+    &__links {
+        display: none;
+        align-items: center;
+        gap: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        font-weight: $grosor-medio;
+        padding-bottom: 0.25rem;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+
+        &:hover {
+            color: var(--text-accent);
+        }
+
+        &--active {
+            color: var(--text-accent);
+            border-bottom-color: var(--text-accent);
+        }
+    }
+
+    // ---------- Acciones (derecha) ----------
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
+    }
+
+    &__donate {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        text-decoration: none;
+        background-color: var(--btn-primary-bg);
+        color: var(--btn-primary-text);
+        font-size: 0.85rem;
+        font-weight: $grosor-medio;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        white-space: nowrap;
+
+        svg {
+            width: 0.85rem;
+            height: 0.85rem;
+        }
+
+        &:hover {
+            background-color: var(--color-terracotta);
+        }
+    }
+
+    &__icon-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border: none;
+        background: transparent;
+        color: var(--text-primary);
+        cursor: pointer;
+        border-radius: 50%;
+
+        svg {
+            width: 1.15rem;
+            height: 1.15rem;
+        }
+
+        &:hover {
+            background-color: var(--bg-surface);
+        }
+    }
+
+    &__badge {
+        position: absolute;
+        top: 0.1rem;
+        right: 0.1rem;
+        min-width: 1rem;
+        height: 1rem;
+        padding: 0 0.25rem;
+        border-radius: 999px;
+        background-color: var(--color-terracotta-dark);
+        color: var(--color-ivory);
+        font-size: 0.6rem;
+        font-weight: $grosor-black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    &__account {
+        display: none;
+        align-items: center;
+        gap: 0.4rem;
+        text-decoration: none;
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        font-weight: $grosor-medio;
+        padding: 0.45rem 1rem;
+        border: 1px solid var(--color-ink);
+        border-radius: 999px;
+        white-space: nowrap;
+
+        svg {
+            width: 0.85rem;
+            height: 0.85rem;
+        }
+
+        &:hover {
+            background-color: var(--bg-surface);
+        }
+    }
+    // ---------- Toggle móvil (hamburguesa) ----------
+    &__toggle {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.3rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+
+        span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            border-radius: 2px;
+        }
+    }
+
+    // ---------- Panel móvil ----------
+    &__mobile-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0 1.5rem 1.25rem;
+        border-top: 1px solid var(--color-border);
+        padding-top: 1rem;
+    }
+
+    &__mobile-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+
+        .navbar__link {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .navbar__donate {
+            display: inline-flex;
+            width: fit-content;
+        }
+    }
+
+    // ---------- Franja de categorías de libros ----------
+    &__categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem 0.85rem;
+    }
+
+    &__category {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex: 1 1 calc(50% - 0.6rem);
+        justify-content: center;
+        min-width: 0;
+        text-decoration: none;
+        color: var(--text-primary);
+        font-size: 0.78rem;
+        font-weight: $grosor-medio;
+        white-space: nowrap;
+        padding: 0.45rem 0.5rem;
+        border-radius: 0.6rem;
+        background-color: var(--color-category-bg, var(--bg-surface));
+
+        // Paleta pastel alternada, en el mismo espíritu que las tarjetas del Figma.
+        &:nth-child(6n + 1) {
+            --color-category-bg: #dce9f5;
+        }
+        &:nth-child(6n + 2) {
+            --color-category-bg: #fbe8dc;
+        }
+        &:nth-child(6n + 3) {
+            --color-category-bg: #e2f0e1;
+        }
+        &:nth-child(6n + 4) {
+            --color-category-bg: #e6e4f7;
+        }
+        &:nth-child(6n + 5) {
+            --color-category-bg: #fbe3ea;
+        }
+        &:nth-child(6n + 6) {
+            --color-category-bg: #fcf3d6;
+        }
+
+        &:hover {
+            filter: brightness(0.97);
+        }
+
+        &--active {
+            outline: 2px solid var(--color-terracotta);
+            outline-offset: -2px;
+        }
+    }
+
+    &__category-icon {
+        font-size: 0.95rem;
+        line-height: 1;
+    }
+
+    @include tablet {
+        &__categories {
+            padding-inline: 1.5rem;
+        }
+
+        &__category {
+            flex: 0 1 auto;
+            padding-inline: 0.9rem;
+            font-size: 0.8rem;
+        }
+
+        &__tagline {
+            display: block;
+        }
+
+        &__search {
+            display: flex;
+        }
+
+        &__account span {
+            display: inline;
+        }
+    }
+
+    @include desktop {
+        &__links {
+            display: flex;
+        }
+
+        &__donate {
+            display: inline-flex;
+        }
+
+        &__account {
+            display: inline-flex;
+        }
+
+        &__toggle {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar__category {
+        flex-basis: 100%;
+    }
+}
