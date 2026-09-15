@@ -1,0 +1,68 @@
+.admin-layout {
+	min-height: 100vh;
+	display: flex;
+	background: #f5f0e8;
+	color: #1a1a18;
+}
+
+.admin-sidebar {
+	width: 220px;
+	flex: 0 0 220px;
+	min-height: 100vh;
+	padding: 1rem 0.65rem;
+	box-sizing: border-box;
+	background: #17382d;
+	color: #fdfbf7;
+}
+
+.admin-brand {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0 0.7rem 1.8rem;
+	color: inherit;
+	text-decoration: none;
+}
+
+.admin-brand__mark {
+	display: grid;
+	place-items: center;
+	width: 1.1rem;
+	height: 1.1rem;
+	color: #ddb57b;
+	background: #ddb57b;
+	font-size: 0;
+}
+
+.admin-brand__name {
+	font-family: Georgia, serif;
+	font-size: 0.97rem;
+	font-weight: 700;
+}
+
+.admin-brand__name em { color: #d9a267; font-weight: 400; }
+.admin-brand__name small { display: block; margin-top: 0.08rem; color: #92b4a7; font-family: Arial, sans-serif; font-size: 0.48rem; font-weight: 400; letter-spacing: 0.08em; }
+
+.admin-nav { display: grid; gap: 0.25rem; }
+.admin-nav__link { display: flex; align-items: center; gap: 0.75rem; padding: 0.72rem 0.8rem; border-left: 2px solid transparent; border-radius: 0.7rem; color: #acd0c1; text-decoration: none; font-size: 0.83rem; }
+.admin-nav__link span { width: 1rem; color: #90bdad; font-size: 1.05rem; text-align: center; }
+.admin-nav__link b { margin-left: auto; padding: 0.15rem 0.38rem; border-radius: 1rem; background: rgba(253, 251, 247, 0.1); color: #e4c18a; font-size: 0.65rem; font-weight: 400; }
+.admin-nav__link:hover, .admin-nav__link--active { border-left-color: #e0a96c; background: rgba(217, 171, 107, 0.18); color: #f8d49f; }
+
+.admin-main { min-width: 0; flex: 1; }
+.admin-header { height: 3.55rem; display: flex; align-items: center; justify-content: space-between; padding: 0 1rem 0 2rem; box-sizing: border-box; background: #265141; color: #9ec0b3; font-size: 0.72rem; }
+.admin-header strong { color: #fff; }
+.admin-header__actions { display: flex; align-items: center; gap: 1rem; }
+.admin-header__actions button, .admin-header__actions a { border: 1px solid rgba(232, 201, 160, 0.25); border-radius: 0.5rem; padding: 0.5rem 0.8rem; background: rgba(253, 251, 247, 0.08); color: #fff; text-decoration: none; font-size: 0.72rem; }
+.admin-header__actions a { color: #e4bd80; }
+.admin-content { min-height: calc(100vh - 3.55rem); padding: 2rem clamp(1rem, 3vw, 2.5rem); box-sizing: border-box; }
+
+@media (max-width: 720px) {
+	.admin-sidebar { width: 4.5rem; flex-basis: 4.5rem; padding-inline: 0.35rem; }
+	.admin-brand { justify-content: center; padding-inline: 0; }
+	.admin-brand__name, .admin-nav__link:not(.admin-nav__link--active)::after, .admin-nav__link b { display: none; }
+	.admin-nav__link { justify-content: center; padding-inline: 0.4rem; }
+	.admin-header { padding-left: 1rem; }
+	.admin-header > span { display: none; }
+	.admin-header__actions { margin-left: auto; }
+}
