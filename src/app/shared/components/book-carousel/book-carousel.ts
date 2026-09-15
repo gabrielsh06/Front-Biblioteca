@@ -1,4 +1,14 @@
-import { Component, input, output, ElementRef, viewChild, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
+import {
+    Component,
+    input,
+    output,
+    ElementRef,
+    viewChild,
+    OnInit,
+    OnDestroy,
+    inject,
+    PLATFORM_ID,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BookCard } from '../book-card/book-card';
 import { Book } from '../../models/book.model';
@@ -8,7 +18,7 @@ import { Book } from '../../models/book.model';
     standalone: true,
     imports: [BookCard],
     templateUrl: './book-carousel.html',
-    styleUrl: './book-carousel.scss'
+    styleUrl: './book-carousel.scss',
 })
 export class BookCarousel implements OnInit, OnDestroy {
     private platformId = inject(PLATFORM_ID);

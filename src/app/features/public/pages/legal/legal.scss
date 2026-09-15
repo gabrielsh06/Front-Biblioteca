@@ -7,7 +7,9 @@
         background: #fff;
         padding: 2.5rem;
         border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.05),
+            0 1px 3px rgba(0, 0, 0, 0.1);
 
         h1 {
             color: #2c3e50;
@@ -40,7 +42,7 @@
             ul {
                 padding-left: 1.5rem;
                 color: #576574;
-                
+
                 li {
                     margin-bottom: 0.8rem;
                     line-height: 1.6;
@@ -54,14 +56,14 @@
 @media (max-width: 768px) {
     .legal-container {
         padding: 1rem;
-        
+
         .legal-content {
             padding: 1.5rem;
-            
+
             h1 {
                 font-size: 1.5rem;
             }
-            
+
             .legal-section h2 {
                 font-size: 1.2rem;
             }

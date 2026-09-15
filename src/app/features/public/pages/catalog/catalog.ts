@@ -2,7 +2,12 @@ import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookCard } from '../../../../shared/components/book-card/book-card';
-import { Book, BOOK_ORIGIN_LABELS, BOOK_STATUS_LABELS, PARENT_CATEGORIES } from '../../../../shared/models/book.model';
+import {
+    Book,
+    BOOK_ORIGIN_LABELS,
+    BOOK_STATUS_LABELS,
+    PARENT_CATEGORIES,
+} from '../../../../shared/models/book.model';
 import { BookStorageService } from '../../../../shared/services/book-storage.service';
 
 type SortOption = 'relevance' | 'recent' | 'title' | 'author';
@@ -25,22 +30,23 @@ export class Catalog {
     readonly isFilterOpen = signal(false);
     readonly categories = PARENT_CATEGORIES;
     readonly statuses = Object.entries(BOOK_STATUS_LABELS) as [Book['status'], string][];
-    readonly origins = Object.entries(BOOK_ORIGIN_LABELS) as [NonNullable<Book['origin']>, string][];
+    readonly origins = Object.entries(BOOK_ORIGIN_LABELS) as [
+        NonNullable<Book['origin']>,
+        string,
+    ][];
     readonly sort = signal<SortOption>('relevance');
     readonly selectedCategory = signal('');
     readonly selectedStatus = signal('');
     readonly selectedOrigin = signal('');
 
     constructor() {
-        this.route.queryParamMap
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((params) => {
-                this.selectedCategory.set(params.get('categoria') ?? params.get('category') ?? '');
-                this.selectedStatus.set(params.get('disponibilidad') ?? '');
-                this.selectedOrigin.set(params.get('origen') ?? '');
-                this.sort.set((params.get('orden') as SortOption) || 'relevance');
-                this.applyFilters();
-            });
+        this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+            this.selectedCategory.set(params.get('categoria') ?? params.get('category') ?? '');
+            this.selectedStatus.set(params.get('disponibilidad') ?? '');
+            this.selectedOrigin.set(params.get('origen') ?? '');
+            this.sort.set((params.get('orden') as SortOption) || 'relevance');
+            this.applyFilters();
+        });
 
         void this.loadBooks();
     }
@@ -86,9 +92,8 @@ export class Catalog {
         const origin = this.selectedOrigin();
         const sortedBooks = this.books()
             .filter((book) => {
-                const hasCategory = !category || book.genres?.some((genre) =>
-                    this.normalize(genre) === category,
-                );
+                const hasCategory =
+                    !category || book.genres?.some((genre) => this.normalize(genre) === category);
                 const hasStatus = !status || book.status === status;
                 const hasOrigin = !origin || book.origin === origin;
                 return hasCategory && hasStatus && hasOrigin;

@@ -1,5 +1,5 @@
-@use "../../../../../scss/variables.scss" as *;
-@use "../../../../../scss/base.scss";
+@use '../../../../../scss/variables.scss' as *;
+@use '../../../../../scss/base.scss';
 
 %icon-base {
     width: 0.9rem;
@@ -94,18 +94,18 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas:
-        "media"
-        "main"
-        "aside";
+        'media'
+        'main'
+        'aside';
 
     &__media {
         grid-area: media;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-areas:
-            "cover cover cover cover"
-            "origin origin origin origin"
-            "favorite favorite favorite share";
+            'cover cover cover cover'
+            'origin origin origin origin'
+            'favorite favorite favorite share';
         gap: 1rem;
     }
 
@@ -118,7 +118,8 @@
         box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.15);
     }
 
-    &__share, &__favorite {
+    &__share,
+    &__favorite {
         @extend %box-bordered;
         @extend %flex-center;
     }
@@ -157,7 +158,10 @@
         align-items: center;
     }
 
-    &__share-icon, &__favorite-icon, &__check-icon, &__clock-icon {
+    &__share-icon,
+    &__favorite-icon,
+    &__check-icon,
+    &__clock-icon {
         @extend %icon-base;
     }
 
@@ -323,8 +327,7 @@
 
     @include desktop {
         grid-template-columns: 0.5fr 1fr 0.7fr;
-        grid-template-areas:
-            "media main aside";
+        grid-template-areas: 'media main aside';
         gap: 2rem;
         justify-items: center;
         justify-content: space-between;

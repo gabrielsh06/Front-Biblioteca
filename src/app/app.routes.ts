@@ -15,28 +15,28 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                component: Home
+                component: Home,
             },
             {
                 path: 'books/:id',
-                component: BookDetail
+                component: BookDetail,
             },
             {
                 path: 'catalogo',
-                component: Catalog
+                component: Catalog,
             },
             {
                 path: 'legales',
-                component: Legal
-            }
-        ]
+                component: Legal,
+            },
+        ],
     },
-    { 
-        path: 'login', 
-        component: Login 
+    {
+        path: 'login',
+        component: Login,
     },
-    { 
-        path: 'admin', 
+    {
+        path: 'admin',
         component: AdminLayout,
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -45,10 +45,10 @@ export const routes: Routes = [
             { path: 'clientes', component: AdminPanel, data: { section: 'clients' } },
             { path: 'prestamos', component: AdminPanel, data: { section: 'loans' } },
             { path: 'donaciones', component: AdminPanel, data: { section: 'donations' } },
-        ]
+        ],
     },
-    { 
-        path: '**', 
-        redirectTo: '' 
-    }
+    {
+        path: '**',
+        redirectTo: '',
+    },
 ];

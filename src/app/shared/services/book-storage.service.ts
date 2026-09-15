@@ -99,9 +99,7 @@ export class BookStorageService {
             return storedBooks;
         }
 
-        const initialBooks = await firstValueFrom(
-            this.http.get<Book[]>('/data/books.json'),
-        );
+        const initialBooks = await firstValueFrom(this.http.get<Book[]>('/data/books.json'));
         const normalizedBooks = initialBooks.map((book) => this.normalizeBook(book));
         this.saveBooks(normalizedBooks);
         return normalizedBooks;

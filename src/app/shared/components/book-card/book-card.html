@@ -14,8 +14,9 @@
             class="book-card__action"
             type="button"
             [disabled]="!isReservable()"
-            (click)="onActionClick($event)">
-                {{actionLabel()}}
+            (click)="onActionClick($event)"
+        >
+            {{ actionLabel() }}
         </button>
     </div>
 </article>

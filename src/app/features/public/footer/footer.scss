@@ -1,5 +1,5 @@
-@use "../../../../scss/base.scss";
-@use "../../../../scss/variables.scss" as *;
+@use '../../../../scss/base.scss';
+@use '../../../../scss/variables.scss' as *;
 
 .footer {
     background-color: var(--bg-footer);
@@ -12,12 +12,12 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-areas:
-            "brand"
-            "social"
-            "nav"
-            "map"
-            "divider"
-            "bottom";
+            'brand'
+            'social'
+            'nav'
+            'map'
+            'divider'
+            'bottom';
         gap: 2rem;
     }
 
@@ -60,7 +60,7 @@
                     height: 24px;
                     display: block;
                     transition: transform 0.2s ease-in-out;
-                    color: #4A90E2;
+                    color: #4a90e2;
 
                     &:hover {
                         transform: scale(1.15);
@@ -137,10 +137,10 @@
         &__container {
             grid-template-columns: 1fr 1fr;
             grid-template-areas:
-                "brand social"
-                "nav map"
-                "divider divider"
-                "bottom bottom";
+                'brand social'
+                'nav map'
+                'divider divider'
+                'bottom bottom';
         }
 
         &__col--map {
@@ -157,10 +157,10 @@
         &__container {
             grid-template-columns: 1fr 1.5fr 1fr;
             grid-template-areas:
-                "brand nav map"
-                "social nav map"
-                "divider divider divider"
-                "bottom bottom bottom";
+                'brand nav map'
+                'social nav map'
+                'divider divider divider'
+                'bottom bottom bottom';
         }
 
         &__nav {

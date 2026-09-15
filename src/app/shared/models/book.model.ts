@@ -44,14 +44,14 @@ export interface Book {
 }
 
 export const BOOK_STATUS_LABELS: Record<BookStatus, string> = {
-    'available': 'Disponible',
+    available: 'Disponible',
     'checked-out': 'Prestado',
-    'unavailable': 'No disponible',
-    'in-library': 'En biblioteca'
+    unavailable: 'No disponible',
+    'in-library': 'En biblioteca',
 };
 
 export const BOOK_ORIGIN_LABELS: Record<BookOrigin, string> = {
     'library-fund': 'Fondo de la Biblioteca',
     'community-donation': 'Donado por la comunidad',
-    'purchased': 'Comprado'
+    purchased: 'Comprado',
 };

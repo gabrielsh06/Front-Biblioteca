@@ -15,7 +15,10 @@
             </button>
             <label class="catalog__sort-mobile">
                 <span>Ordenar por</span>
-                <select [value]="sort()" (change)="updateFilter('orden', $any($event.target).value)">
+                <select
+                    [value]="sort()"
+                    (change)="updateFilter('orden', $any($event.target).value)"
+                >
                     <option value="relevance">Relevancia</option>
                     <option value="recent">Más recientes</option>
                     <option value="title">Título A-Z</option>
@@ -28,7 +31,9 @@
             <aside class="catalog__filters" [class.catalog__filters--open]="isFilterOpen()">
                 <div class="catalog__filters-header">
                     <h2>Filtrar catálogo</h2>
-                    <button type="button" aria-label="Cerrar filtros" (click)="closeFilters()">×</button>
+                    <button type="button" aria-label="Cerrar filtros" (click)="closeFilters()">
+                        ×
+                    </button>
                 </div>
 
                 <fieldset>
@@ -39,7 +44,8 @@
                                 type="radio"
                                 name="status"
                                 [checked]="selectedStatus() === status[0]"
-                                (change)="updateFilter('disponibilidad', status[0])">
+                                (change)="updateFilter('disponibilidad', status[0])"
+                            />
                             <span>{{ status[1] }}</span>
                         </label>
                     }
@@ -53,7 +59,8 @@
                                 type="radio"
                                 name="origin"
                                 [checked]="selectedOrigin() === origin[0]"
-                                (change)="updateFilter('origen', origin[0])">
+                                (change)="updateFilter('origen', origin[0])"
+                            />
                             <span>{{ origin[1] }}</span>
                         </label>
                     }
@@ -67,25 +74,38 @@
                                 type="radio"
                                 name="category"
                                 [checked]="selectedCategory() === category.slug"
-                                (change)="updateFilter('categoria', category.slug)">
+                                (change)="updateFilter('categoria', category.slug)"
+                            />
                             <span>{{ category.label }}</span>
                         </label>
                     }
                 </fieldset>
 
-                <button class="catalog__clear" type="button" (click)="clearFilters()">Limpiar filtros</button>
+                <button class="catalog__clear" type="button" (click)="clearFilters()">
+                    Limpiar filtros
+                </button>
             </aside>
 
             @if (isFilterOpen()) {
-                <button class="catalog__backdrop" type="button" aria-label="Cerrar filtros" (click)="closeFilters()"></button>
+                <button
+                    class="catalog__backdrop"
+                    type="button"
+                    aria-label="Cerrar filtros"
+                    (click)="closeFilters()"
+                ></button>
             }
 
             <section class="catalog__results" aria-live="polite">
                 <div class="catalog__results-header">
-                    <p><strong>{{ filteredBooks().length }}</strong> libros encontrados</p>
+                    <p>
+                        <strong>{{ filteredBooks().length }}</strong> libros encontrados
+                    </p>
                     <label class="catalog__sort-desktop">
                         <span>Ordenar por</span>
-                        <select [value]="sort()" (change)="updateFilter('orden', $any($event.target).value)">
+                        <select
+                            [value]="sort()"
+                            (change)="updateFilter('orden', $any($event.target).value)"
+                        >
                             <option value="relevance">Relevancia</option>
                             <option value="recent">Más recientes</option>
                             <option value="title">Título A-Z</option>

@@ -42,15 +42,13 @@ export class BookDetail {
     });
 
     constructor() {
-        this.route.paramMap
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((params) => {
-                const bookId = params.get('id');
+        this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+            const bookId = params.get('id');
 
-                if (bookId) {
-                    void this.loadBook(bookId);
-                }
-            });
+            if (bookId) {
+                void this.loadBook(bookId);
+            }
+        });
     }
 
     private async loadBook(bookId: string): Promise<void> {
@@ -65,12 +63,15 @@ export class BookDetail {
         this.book.set(selectedBook);
         this.isFavorite.set(false);
         this.authorBooks.set(
-            books.filter((book) => book.id !== selectedBook.id && book.author === selectedBook.author),
+            books.filter(
+                (book) => book.id !== selectedBook.id && book.author === selectedBook.author,
+            ),
         );
         this.relatedBooks.set(
-            books.filter((book) =>
-                book.id !== selectedBook.id &&
-                book.genres?.some((genre) => selectedBook.genres?.includes(genre)),
+            books.filter(
+                (book) =>
+                    book.id !== selectedBook.id &&
+                    book.genres?.some((genre) => selectedBook.genres?.includes(genre)),
             ),
         );
     }

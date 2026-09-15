@@ -10,7 +10,7 @@ import { Book, BOOK_STATUS_LABELS } from '../../models/book.model';
 })
 export class BookCard {
     book = input.required<Book>();
-    reserve = output<string>()
+    reserve = output<string>();
 
     isReservable = computed(() => this.book().status === 'available');
 

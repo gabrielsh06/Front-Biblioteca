@@ -1,5 +1,5 @@
-@use "../../../../scss/variables.scss" as *;
-@use "../../../../scss/base.scss";
+@use '../../../../scss/variables.scss' as *;
+@use '../../../../scss/base.scss';
 
 .book-carousel {
     width: 100%;
@@ -90,7 +90,9 @@
             color: var(--color-forest, #2d5a27);
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s ease, background-color 0.2s ease;
+            transition:
+                transform 0.2s ease,
+                background-color 0.2s ease;
 
             &:hover {
                 background-color: var(--color-forest, #2d5a27);

@@ -24,7 +24,7 @@ export class Navbar {
         { label: 'Catálogo', path: '/catalogo' },
         { label: 'Novedades', path: '/novedades' },
     ];
-    
+
     readonly categories: BookCategory[] = [
         { label: 'Ficción', slug: 'ficcion', icon: '📖' },
         { label: 'No ficción', slug: 'no-ficcion', icon: '🧭' },
