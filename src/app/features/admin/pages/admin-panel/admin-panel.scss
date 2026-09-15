@@ -359,6 +359,14 @@ h2 {
     margin-bottom: 1.2rem;
     font-size: 1.45rem;
 }
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem 1rem;
+}
+.form-grid__full {
+    grid-column: 1 / -1;
+}
 .modal__close {
     position: absolute;
     top: 0.75rem;
@@ -396,6 +404,15 @@ h2 {
     color: #5c564e;
     font-size: 0.78rem;
     cursor: pointer;
+}
+.primary-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.form-error {
+    margin: 1rem 0 0;
+    color: #c34d45;
+    font-size: 0.72rem;
 }
 .toast {
     position: fixed;
@@ -437,5 +454,13 @@ h2 {
     }
     .summary-label {
         padding-top: 0;
+    }
+}
+@media (max-width: 520px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-grid__full {
+        grid-column: auto;
     }
 }
