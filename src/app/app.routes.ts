@@ -6,6 +6,7 @@ import { Home } from './features/public/pages/home/home';
 import { Login } from './features/public/pages/login/login';
 import { BookDetail } from './features/public/pages/book-detail/book-detail';
 import { Catalog } from './features/public/pages/catalog/catalog';
+import { Legal } from './features/public/pages/legal/legal';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,10 @@ export const routes: Routes = [
             {
                 path: 'catalogo',
                 component: Catalog
+            },
+            {
+                path: 'legales',
+                component: Legal
             }
         ]
     },

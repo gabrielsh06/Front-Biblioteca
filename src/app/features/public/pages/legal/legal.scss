@@ -1,0 +1,70 @@
+.legal-container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+
+    .legal-content {
+        background: #fff;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .legal-section {
+            margin-bottom: 2.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            h2 {
+                color: #34495e;
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                border-bottom: 2px solid #f1f2f6;
+                padding-bottom: 0.5rem;
+            }
+
+            p {
+                line-height: 1.7;
+                color: #576574;
+                margin-bottom: 1rem;
+            }
+
+            ul {
+                padding-left: 1.5rem;
+                color: #576574;
+                
+                li {
+                    margin-bottom: 0.8rem;
+                    line-height: 1.6;
+                }
+            }
+        }
+    }
+}
+
+// Media Query for smaller screens
+@media (max-width: 768px) {
+    .legal-container {
+        padding: 1rem;
+        
+        .legal-content {
+            padding: 1.5rem;
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .legal-section h2 {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
