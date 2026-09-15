@@ -1,0 +1,53 @@
+@use '../../../../../scss/base.scss';
+@use '../../../../../scss/variables.scss' as *;
+
+.login {
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.25rem;
+    background-color: var(--bg-body);
+
+    &__card {
+        width: 100%;
+        max-width: 380px;
+        background-color: var(--color-ivory);
+        border: 1px solid var(--color-border);
+        border-radius: 1rem;
+        padding: 2rem 1.75rem;
+        box-shadow: 0 20px 40px rgba(26, 26, 24, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    &__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+    }
+
+    &__logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.375rem;
+        background: linear-gradient(
+            160deg,
+            var(--color-terracotta) 0%,
+            var(--color-terracotta-dark) 100%
+        );
+        color: var(--color-ivory);
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+}
