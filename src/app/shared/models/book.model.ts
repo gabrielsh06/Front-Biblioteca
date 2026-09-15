@@ -1,6 +1,20 @@
 export type BookStatus = 'available' | 'checked-out' | 'unavailable' | 'in-library';
 export type BookOrigin = 'library-fund' | 'community-donation' | 'purchased';
 
+export interface ParentCategory {
+    label: string;
+    slug: string;
+}
+
+export const PARENT_CATEGORIES: ParentCategory[] = [
+    { label: 'Ficción', slug: 'fiction' },
+    { label: 'No ficción', slug: 'non-fiction' },
+    { label: 'Poesía', slug: 'poetry' },
+    { label: 'Ciencia Ficción', slug: 'science-fiction' },
+    { label: 'Infantil', slug: 'children' },
+    { label: 'Desarrollo Personal', slug: 'personal-development' },
+];
+
 export interface Book {
     id: string;
     title: string;
