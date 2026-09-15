@@ -1,7 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LoginCredentials } from '../../../../shared/models/user.model';
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-login',
