@@ -23,11 +23,11 @@ export class Home {
 
     private async loadBooks(): Promise<void> {
         const books = await this.bookStorage.loadBooks();
-        this.recommendedBooks.set(books.slice(0, 6));
+        this.recommendedBooks.set(books.slice(0, 12));
         this.popularBooks.set(
             [...books]
                 .sort((first, second) => (second.likesCount ?? 0) - (first.likesCount ?? 0))
-                .slice(0, 6),
+                .slice(0, 12),
         );
     }
 }
