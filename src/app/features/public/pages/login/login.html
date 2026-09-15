@@ -1,0 +1,107 @@
+<section class="login">
+    <div class="login__card">
+        <a class="login__brand" routerLink="/">
+            <span class="login__logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true">
+                    <path
+                        fill="currentColor"
+                        d="M96 128C96 92.7 124.7 64 160 64L288 64L288 576L160 576C124.7 576 96 547.3 96 512L96 128zM352 64L480 64C515.3 64 544 92.7 544 128L544 512C544 547.3 515.3 576 480 576L352 576L352 64z"
+                    />
+                </svg>
+            </span>
+            <span class="login__brand-text">Biblioteca <em>Abierta</em></span>
+        </a>
+
+        <h1 class="login__title">Inicia sesión</h1>
+        <p class="login__subtitle">Accede a tu cuenta para reservar y donar libros.</p>
+
+        <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="login__field">
+                <label class="login__label" for="email">Correo electrónico</label>
+                <input
+                    id="email"
+                    class="login__input"
+                    type="email"
+                    formControlName="email"
+                    placeholder="tucorreo@ejemplo.com"
+                    autocomplete="email"
+                />
+                @if (form.controls.email.invalid && form.controls.email.touched) {
+                    <span class="login__error">
+                        @if (form.controls.email.hasError('required')) {
+                            Ingresa tu correo electrónico.
+                        } @else if (form.controls.email.hasError('email')) {
+                            Ingresa un correo electrónico válido.
+                        }
+                    </span>
+                }
+            </div>
+
+            <div class="login__field">
+                <label class="login__label" for="password">Contraseña</label>
+                <div class="login__password-wrapper">
+                    <input
+                        id="password"
+                        class="login__input"
+                        [type]="isPasswordVisible() ? 'text' : 'password'"
+                        formControlName="password"
+                        placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password"
+                    />
+                    <button
+                        class="login__toggle-password"
+                        type="button"
+                        (click)="togglePasswordVisibility()"
+                        [attr.aria-label]="
+                            isPasswordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'
+                        "
+                    >
+                        @if (isPasswordVisible()) {
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 640 640"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M320 176C214 176 122.5 241.4 84.6 334.6C81.9 341.3 81.9 348.8 84.6 355.5C122.5 448.6 214 514 320 514C426 514 517.5 448.6 555.4 355.4C558.1 348.7 558.1 341.2 555.4 334.5C517.5 241.4 426 176 320 176zM320 448.9C258.7 448.9 209 399.2 209 337.9C209 276.6 258.7 226.9 320 226.9C381.3 226.9 431 276.6 431 337.9C431 399.2 381.3 448.9 320 448.9zM320 289.9C295.7 289.9 276 309.6 276 333.9C276 358.2 295.7 377.9 320 377.9C344.3 377.9 364 358.2 364 333.9C364 309.6 344.3 289.9 320 289.9z"
+                                />
+                            </svg>
+                        } @else {
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 640 640"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M73 39C63.7 30.5 49.3 31.2 40.8 40.5C32.3 49.8 33 64.2 42.3 72.7L568.3 552.7C577.6 561.2 592 560.5 600.5 551.2C609 541.9 608.3 527.5 599 519L495.7 424.2C531.5 396.5 559.7 359.8 576.7 316.4C579.4 309.7 579.4 302.2 576.7 295.5C538.8 202.4 447.3 137 340.2 137C296.2 137 254.6 148.1 218.2 167.6L73 39zM280.3 233.2C293.2 224.9 308.6 220 325.1 220C371 220 408.1 257.1 408.1 303C408.1 313 406.4 322.6 403.2 331.5L280.3 233.2zM480 337C480 373.3 466.6 406.4 444.6 431.7L471.4 456C512.4 421.8 545.5 377.6 566.7 326.6C529.5 234.4 439.4 168.9 333.9 168.9C305.6 168.9 278.5 173.7 253.4 182.5L286.5 213C300.6 200.5 318 191.4 337.1 187.4C333.3 194.1 331.1 201.8 331.1 210C331.1 234.3 350.8 254 375.1 254C383.3 254 391 251.8 397.7 248C425.5 259.4 447 283.1 456.2 312.3C468.8 319.4 480 328 480 337z"
+                                />
+                            </svg>
+                        }
+                    </button>
+                </div>
+                @if (form.controls.password.invalid && form.controls.password.touched) {
+                    <span class="login__error">
+                        @if (form.controls.password.hasError('required')) {
+                            Ingresa tu contraseña.
+                        } @else if (form.controls.password.hasError('minlength')) {
+                            La contraseña debe tener al menos 6 caracteres.
+                        }
+                    </span>
+                }
+            </div>
+
+            <a class="login__forgot" routerLink="/recuperar-password">¿Olvidaste tu contraseña?</a>
+
+            <button class="login__submit" type="submit" [disabled]="isSubmitting()">
+                {{ isSubmitting() ? 'Ingresando...' : 'Iniciar sesión' }}
+            </button>
+        </form>
+
+        <p class="login__signup">
+            ¿No tienes cuenta?
+            <a routerLink="/registro">Regístrate</a>
+        </p>
+    </div>
+</section>

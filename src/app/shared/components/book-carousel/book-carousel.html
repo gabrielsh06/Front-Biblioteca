@@ -1,0 +1,40 @@
+<section
+    class="book-carousel"
+    (mouseenter)="stopAutoplay()"
+    (mouseleave)="startAutoplay()"
+    (touchstart)="stopAutoplay()"
+    (touchend)="startAutoplay()">
+
+    @if (title()) {
+        <div class="book-carousel__header">
+            <h2 class="book-carousel__title">{{ title() }}</h2>
+        </div>
+    }
+
+    <div class="book-carousel__wrapper">
+        <button class="book-carousel__arrow book-carousel__arrow--prev" (click)="scrollLeft()" aria-label="Anterior" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+            </svg>
+        </button>
+
+        <div class="book-carousel__track" #track>
+            @for (book of books(); track book.id) {
+                <div class="book-carousel__item">
+                    <app-book-card
+                        [book]="book"
+                        (reserve)="onReserve($event)">
+                    </app-book-card>
+                </div>
+            } @empty {
+                <p class="book-carousel__empty">No hay libros disponibles.</p>
+            }
+        </div>
+
+        <button class="book-carousel__arrow book-carousel__arrow--next" (click)="scrollRight()" aria-label="Siguiente" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5 12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+            </svg>
+        </button>
+    </div>
+</section>

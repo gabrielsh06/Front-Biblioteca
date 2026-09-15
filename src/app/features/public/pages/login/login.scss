@@ -1,0 +1,213 @@
+@use '../../../../../scss/base.scss';
+@use '../../../../../scss/variables.scss' as *;
+
+.login {
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.25rem;
+    background-color: var(--bg-body);
+
+    &__card {
+        width: 100%;
+        max-width: 380px;
+        background-color: var(--color-ivory);
+        border: 1px solid var(--color-border);
+        border-radius: 1rem;
+        padding: 2rem 1.75rem;
+        box-shadow: 0 20px 40px rgba(26, 26, 24, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    &__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+    }
+
+    &__logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.375rem;
+        background: linear-gradient(
+            160deg,
+            var(--color-terracotta) 0%,
+            var(--color-terracotta-dark) 100%
+        );
+        color: var(--color-ivory);
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+
+    &__brand-text {
+        @extend .font-title;
+        font-weight: $grosor-destacado;
+        font-size: 1.05rem;
+        color: var(--text-primary);
+
+        em {
+            font-style: italic;
+            color: var(--text-accent);
+        }
+    }
+
+    &__title {
+        @extend .font-title;
+        font-size: 1.6rem;
+        color: var(--text-primary);
+        margin-bottom: 0.35rem;
+    }
+
+    &__subtitle {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1.75rem;
+    }
+
+    &__form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+        text-align: left;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    &__label {
+        font-size: 0.8rem;
+        font-weight: $grosor-medio;
+        color: var(--text-primary);
+    }
+
+    &__input {
+        width: 100%;
+        border: 1px solid var(--color-border);
+        border-radius: 0.6rem;
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+        font-family: $fuente-principal;
+        color: var(--text-primary);
+        background-color: var(--bg-surface);
+        outline: none;
+        transition: border-color 0.15s ease;
+
+        &:focus {
+            border-color: var(--color-terracotta);
+        }
+
+        &::placeholder {
+            color: var(--text-muted);
+        }
+    }
+
+    &__password-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .login__input {
+            padding-right: 2.6rem;
+        }
+    }
+
+    &__toggle-password {
+        position: absolute;
+        right: 0.6rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.75rem;
+        height: 1.75rem;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+
+        svg {
+            width: 1.05rem;
+            height: 1.05rem;
+        }
+
+        &:hover {
+            color: var(--text-primary);
+        }
+    }
+
+    &__error {
+        font-size: 0.75rem;
+        color: var(--color-terracotta-dark);
+    }
+
+    &__forgot {
+        align-self: flex-end;
+        font-size: 0.8rem;
+        color: var(--text-accent);
+        text-decoration: none;
+        margin-top: -0.4rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__submit {
+        margin-top: 0.25rem;
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 999px;
+        background-color: var(--btn-primary-bg);
+        color: var(--btn-primary-text);
+        font-weight: $grosor-medio;
+        font-size: 0.95rem;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background-color: var(--color-terracotta);
+        }
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+    }
+
+    &__signup {
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+
+        a {
+            color: var(--text-accent);
+            text-decoration: none;
+            font-weight: $grosor-medio;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    @include tablet {
+        &__card {
+            padding: 2.5rem 2.25rem;
+        }
+    }
+}
