@@ -1,6 +1,7 @@
-import { Component, output, computed, signal, inject } from '@angular/core';
+import { Component, output, computed, signal, inject, DestroyRef } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Book, BOOK_STATUS_LABELS, BOOK_ORIGIN_LABELS } from '../../../../shared/models/book.model';
 import { BookCarousel } from '../../../../shared/components/book-carousel/book-carousel';
 import { BookStorageService } from '../../../../shared/services/book-storage.service';
@@ -15,6 +16,7 @@ export class BookDetail {
     private location = inject(Location);
     private route = inject(ActivatedRoute);
     private bookStorage = inject(BookStorageService);
+    private destroyRef = inject(DestroyRef);
 
     book = signal<Book>({
         id: '',
@@ -40,13 +42,20 @@ export class BookDetail {
     });
 
     constructor() {
-        void this.loadBook();
+        this.route.paramMap
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((params) => {
+                const bookId = params.get('id');
+
+                if (bookId) {
+                    void this.loadBook(bookId);
+                }
+            });
     }
 
-    private async loadBook(): Promise<void> {
+    private async loadBook(bookId: string): Promise<void> {
         const books = await this.bookStorage.loadBooks();
-        const bookId = this.route.snapshot.paramMap.get('id');
-        const selectedBook = bookId ? books.find((book) => book.id === bookId) : undefined;
+        const selectedBook = books.find((book) => book.id === bookId);
 
         if (!selectedBook) {
             this.location.back();
@@ -54,6 +63,7 @@ export class BookDetail {
         }
 
         this.book.set(selectedBook);
+        this.isFavorite.set(false);
         this.authorBooks.set(
             books.filter((book) => book.id !== selectedBook.id && book.author === selectedBook.author),
         );
