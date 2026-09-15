@@ -16,6 +16,8 @@ export class AdminPanel {
     readonly activeFilter = signal('Todos');
     readonly modal = signal<'book' | 'client' | null>(null);
     readonly notice = signal('');
+    readonly formError = signal('');
+    readonly draft = signal<Record<string, string>>({});
 
     readonly recentLoans = [
         { initials: 'SM', name: 'Sofía Martínez', book: 'Orgullo y prejuicio', status: 'ACTIVO' },
@@ -33,16 +35,16 @@ export class AdminPanel {
         { title: 'Historia del tiempo', donor: 'Julián Castro', date: '2026-09-13', status: 'PENDIENTE' },
     ]);
 
-    readonly books = [
+    readonly books = signal<string[][]>([
         ['Cien años de soledad', 'Gabriel García Márquez · 1967', 'Ficción', '978-84-397-0468-9', '471', 'DISPONIBLE', 'BIBLIOTECA'],
         ['La casa de los espíritus', 'Isabel Allende · 1982', 'Ficción', '978-84-08-04254-3', '432', 'PRESTADO', 'BIBLIOTECA'],
         ['El nombre del viento', 'Patrick Rothfuss · 2007', 'Ficción', '978-84-9800-235-4', '662', 'DISPONIBLE', 'DONADO'],
         ['Rayuela', 'Julio Cortázar · 1963', 'Ficción', '978-84-376-0494-7', '600', 'SOLO SALA', 'BIBLIOTECA'],
         ['El Alquimista', 'Paulo Coelho · 1988', 'Desarrollo Personal', '978-84-08-17432-1', '197', 'DISPONIBLE', 'DONADO'],
         ['Pedro Páramo', 'Juan Rulfo · 1955', 'Ficción', '978-84-376-0093-2', '124', 'DISPONIBLE', 'BIBLIOTECA'],
-    ];
+    ]);
 
-    readonly clients = [
+    readonly clients = signal<string[][]>([
         ['Diego Ramírez', 'diego@mail.com', '+34 634 567 890', '2023-11-05', '1', '27', 'ACTIVO'],
         ['Valentina Torres', 'vale@mail.com', '+34 655 123 456', '2024-01-20', '0', '8', 'ACTIVO'],
         ['Andrés Gómez', 'andres@mail.com', '+34 677 234 567', '2022-08-14', '0', '42', 'SUSPENDIDO'],
@@ -50,7 +52,7 @@ export class AdminPanel {
         ['Mateo Silva', 'mateo@mail.com', '+34 611 456 789', '2023-04-22', '0', '19', 'ACTIVO'],
         ['Camila Ruiz', 'camila@mail.com', '+34 633 567 890', '2024-02-15', '1', '5', 'ACTIVO'],
         ['Sebastián López', 'seba@mail.com', '+34 654 678 901', '2021-12-03', '0', '61', 'ACTIVO'],
-    ];
+    ]);
 
     readonly loans = signal([
         ['Sofía Martínez', 'sofia@mail.com', 'Cien años de soledad', '2026-08-20', '2026-09-03', 'ACTIVO'],
@@ -65,7 +67,7 @@ export class AdminPanel {
     get filteredBooks(): string[][] {
         const search = this.searchTerm().toLowerCase();
         const filter = this.activeFilter();
-        return this.books.filter((book) => {
+        return this.books().filter((book) => {
             const matchesSearch = book.some((value) => value.toLowerCase().includes(search));
             const matchesFilter = filter === 'Todos' || book[5] === filter.toUpperCase();
             return matchesSearch && matchesFilter;
@@ -76,7 +78,7 @@ export class AdminPanel {
         const search = this.searchTerm().toLowerCase();
         const filter = this.activeFilter();
         const statusFilter = filter === 'Activos' ? 'ACTIVO' : filter === 'Suspendidos' ? 'SUSPENDIDO' : filter.toUpperCase();
-        return this.clients.filter((client) => {
+        return this.clients().filter((client) => {
             const matchesSearch = client.some((value) => value.toLowerCase().includes(search));
             const matchesFilter = filter === 'Todos' || client[6] === statusFilter;
             return matchesSearch && matchesFilter;
@@ -114,14 +116,52 @@ export class AdminPanel {
 
     openModal(type: 'book' | 'client'): void {
         this.modal.set(type);
+        this.formError.set('');
+        this.draft.set(type === 'book' ? {
+            title: '', author: '', year: new Date().getFullYear().toString(), isbn: '',
+            publisher: '', pages: '', category: 'Ficción', status: 'DISPONIBLE', origin: 'BIBLIOTECA',
+        } : {
+            name: '', email: '', phone: '', registeredAt: new Date().toISOString().slice(0, 10), status: 'ACTIVO',
+        });
     }
 
     closeModal(): void {
         this.modal.set(null);
+        this.formError.set('');
+        this.draft.set({});
+    }
+
+    updateDraft(field: string, event: Event): void {
+        this.draft.update((current) => ({ ...current, [field]: (event.target as HTMLInputElement | HTMLSelectElement).value }));
+        this.formError.set('');
+    }
+
+    get isDraftComplete(): boolean {
+        const fields = this.modal() === 'book'
+            ? ['title', 'author', 'year', 'isbn', 'publisher', 'pages', 'category', 'status', 'origin']
+            : ['name', 'email', 'phone', 'registeredAt', 'status'];
+        return fields.every((field) => Boolean(this.draft()[field]?.trim()));
     }
 
     confirmAdd(): void {
-        this.notice.set(this.modal() === 'book' ? 'Libro agregado visualmente.' : 'Cliente agregado visualmente.');
+        if (!this.isDraftComplete) {
+            this.formError.set('Completa todos los campos antes de guardar.');
+            return;
+        }
+
+        const values = this.draft();
+        if (this.modal() === 'book') {
+            this.books.update((items) => [...items, [
+                values['title'], `${values['author']} · ${values['year']}`,
+                values['category'], values['isbn'], values['pages'], values['status'], values['origin'],
+            ]]);
+            this.notice.set('Libro agregado visualmente al catálogo.');
+        } else {
+            this.clients.update((items) => [...items, [
+                values['name'], values['email'], values['phone'], values['registeredAt'], '0', '0', values['status'],
+            ]]);
+            this.notice.set('Cliente agregado visualmente.');
+        }
         this.closeModal();
         setTimeout(() => this.notice.set(''), 2500);
     }
