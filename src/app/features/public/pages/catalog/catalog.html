@@ -1,0 +1,113 @@
+<main class="catalog">
+    <div class="catalog__container">
+        <header class="catalog__header">
+            <p class="catalog__eyebrow">Explora nuestra colección</p>
+            <h1 class="catalog__title">Catálogo de la biblioteca</h1>
+            <p class="catalog__description">
+                Encuentra tu próxima historia entre los libros disponibles para la comunidad.
+            </p>
+        </header>
+
+        <div class="catalog__mobile-toolbar">
+            <button class="catalog__filter-toggle" type="button" (click)="toggleFilters()">
+                <span>Filtros</span>
+                <span aria-hidden="true">☰</span>
+            </button>
+            <label class="catalog__sort-mobile">
+                <span>Ordenar por</span>
+                <select [value]="sort()" (change)="updateFilter('orden', $any($event.target).value)">
+                    <option value="relevance">Relevancia</option>
+                    <option value="recent">Más recientes</option>
+                    <option value="title">Título A-Z</option>
+                    <option value="author">Autor A-Z</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="catalog__layout">
+            <aside class="catalog__filters" [class.catalog__filters--open]="isFilterOpen()">
+                <div class="catalog__filters-header">
+                    <h2>Filtrar catálogo</h2>
+                    <button type="button" aria-label="Cerrar filtros" (click)="closeFilters()">×</button>
+                </div>
+
+                <fieldset>
+                    <legend>Disponibilidad</legend>
+                    @for (status of statuses; track status[0]) {
+                        <label class="catalog__check">
+                            <input
+                                type="radio"
+                                name="status"
+                                [checked]="selectedStatus() === status[0]"
+                                (change)="updateFilter('disponibilidad', status[0])">
+                            <span>{{ status[1] }}</span>
+                        </label>
+                    }
+                </fieldset>
+
+                <fieldset>
+                    <legend>Origen</legend>
+                    @for (origin of origins; track origin[0]) {
+                        <label class="catalog__check">
+                            <input
+                                type="radio"
+                                name="origin"
+                                [checked]="selectedOrigin() === origin[0]"
+                                (change)="updateFilter('origen', origin[0])">
+                            <span>{{ origin[1] }}</span>
+                        </label>
+                    }
+                </fieldset>
+
+                <fieldset>
+                    <legend>Categorías</legend>
+                    @for (category of categories; track category.slug) {
+                        <label class="catalog__check">
+                            <input
+                                type="radio"
+                                name="category"
+                                [checked]="selectedCategory() === category.slug"
+                                (change)="updateFilter('categoria', category.slug)">
+                            <span>{{ category.label }}</span>
+                        </label>
+                    }
+                </fieldset>
+
+                <button class="catalog__clear" type="button" (click)="clearFilters()">Limpiar filtros</button>
+            </aside>
+
+            @if (isFilterOpen()) {
+                <button class="catalog__backdrop" type="button" aria-label="Cerrar filtros" (click)="closeFilters()"></button>
+            }
+
+            <section class="catalog__results" aria-live="polite">
+                <div class="catalog__results-header">
+                    <p><strong>{{ filteredBooks().length }}</strong> libros encontrados</p>
+                    <label class="catalog__sort-desktop">
+                        <span>Ordenar por</span>
+                        <select [value]="sort()" (change)="updateFilter('orden', $any($event.target).value)">
+                            <option value="relevance">Relevancia</option>
+                            <option value="recent">Más recientes</option>
+                            <option value="title">Título A-Z</option>
+                            <option value="author">Autor A-Z</option>
+                        </select>
+                    </label>
+                </div>
+
+                @if (filteredBooks().length > 0) {
+                    <div class="catalog__grid">
+                        @for (book of visibleBooks(); track book.id) {
+                            <app-book-card [book]="book"></app-book-card>
+                        }
+                    </div>
+                } @else {
+                    <div class="catalog__empty">
+                        <h2>No encontramos libros</h2>
+                        <p>Prueba quitando algún filtro para ampliar la búsqueda.</p>
+                        <button type="button" (click)="clearFilters()">Ver todo el catálogo</button>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</main>
