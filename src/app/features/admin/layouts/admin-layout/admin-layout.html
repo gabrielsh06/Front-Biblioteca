@@ -1,11 +1,34 @@
 <div class="admin-layout">
   <aside class="admin-sidebar">
-    Sidebar-lateral
+    <a class="admin-brand" routerLink="/admin/dashboard">
+      <span class="admin-brand__mark">▮</span>
+      <span class="admin-brand__name">Biblioteca <em>Abierta</em><small>PANEL DE ADMINISTRACIÓN</small></span>
+    </a>
+
+    <nav class="admin-nav" aria-label="Navegación administrativa">
+      <a class="admin-nav__link" routerLink="/admin/dashboard" routerLinkActive="admin-nav__link--active">
+        <span>▦</span> Dashboard
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/libros" routerLinkActive="admin-nav__link--active">
+        <span>▤</span> Libros <b>25</b>
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/clientes" routerLinkActive="admin-nav__link--active">
+        <span>♙</span> Clientes <b>7</b>
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/prestamos" routerLinkActive="admin-nav__link--active">
+        <span>☑</span> Préstamos <b>5</b>
+      </a>
+      <a class="admin-nav__link" routerLink="/admin/donaciones" routerLinkActive="admin-nav__link--active">
+        <span>♡</span> Donaciones <b>3</b>
+      </a>
+    </nav>
   </aside>
-  <header class="admin-header">
-    Header
-  </header>
-  <main class="admin-content">
-    <router-outlet></router-outlet>
-  </main>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <span>Admin&nbsp; / &nbsp;<strong>Panel administrativo</strong></span>
+      <div class="admin-header__actions"><span>♧</span><button type="button">A&nbsp;&nbsp; Administrador</button><a routerLink="/login">↪&nbsp; Salir</a></div>
+    </header>
+    <main class="admin-content"><router-outlet></router-outlet></main>
+  </div>
 </div>
