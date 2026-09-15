@@ -15,7 +15,7 @@ export class BookCarousel implements OnInit, OnDestroy {
     private autoplayInterval: any;
 
     title = input<string>('Libros recomendados');
-    books = input.required<Book[]>();
+    books = input<Book[]>([]);
     reserveEvent = output<string>();
 
     track = viewChild<ElementRef<HTMLElement>>('track');

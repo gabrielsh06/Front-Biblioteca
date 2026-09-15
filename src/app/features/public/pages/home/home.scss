@@ -1,0 +1,322 @@
+@use '../../../../../scss/base.scss';
+@use '../../../../../scss/variables.scss' as *;
+
+.home {
+    width: 100%;
+
+    &-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    &-banner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow: hidden;
+        padding: 2.5rem 1.25rem;
+        border-radius: 1.25rem;
+        background:
+            radial-gradient(circle at 100% 0%, rgba(212, 163, 115, 0.25), transparent 42%),
+            var(--bg-dark-section);
+        color: var(--text-on-dark);
+
+        &::after {
+            position: absolute;
+            right: -4rem;
+            bottom: -5rem;
+            width: 12rem;
+            height: 12rem;
+            border: 1px solid rgba(253, 251, 247, 0.2);
+            border-radius: 50%;
+            content: '';
+        }
+
+        p {
+            max-width: 42rem;
+            color: rgba(253, 251, 247, 0.82);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        &__actions {
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        button,
+        .home-donate__action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-height: 2.75rem;
+            padding: 0.7rem 1.1rem;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            font: inherit;
+            font-weight: $grosor-medio;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
+
+            &:focus-visible {
+                outline: 3px solid var(--color-terracotta-light);
+                outline-offset: 3px;
+            }
+
+            svg {
+                width: 1rem;
+                height: 1rem;
+                fill: currentColor;
+            }
+        }
+
+        &__explore {
+            background-color: var(--color-terracotta);
+            color: var(--color-ink);
+
+            &:hover {
+                background-color: var(--color-terracotta-light);
+            }
+        }
+
+        &__donate {
+            border-color: rgba(253, 251, 247, 0.65);
+            background-color: transparent;
+            color: var(--text-on-dark);
+
+            &:hover {
+                background-color: rgba(253, 251, 247, 0.12);
+            }
+        }
+    }
+
+    &__title {
+        position: relative;
+        z-index: 1;
+        max-width: 18rem;
+        font-size: clamp(2.35rem, 9vw, 4.5rem);
+        line-height: 1.05;
+        white-space: pre-line;
+
+        em {
+            color: var(--color-terracotta-light);
+            font-style: italic;
+        }
+    }
+
+    &-categories {
+        padding: 2.5rem 0 1rem;
+
+        &__title,
+        .home-donate__title {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        > div {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.6rem;
+        }
+
+        &__action {
+            min-height: 4.25rem;
+            padding: 0.5rem 0.35rem;
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            background-color: var(--category-background);
+            color: var(--text-primary);
+            font: inherit;
+            font-size: 0.75rem;
+            line-height: 1.2;
+            cursor: pointer;
+            box-shadow: 0 0.15rem 0.25rem rgba(26, 26, 24, 0.04);
+            transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+            &:nth-child(1) {
+                --category-background: #f8e8e3;
+            }
+
+            &:nth-child(2) {
+                --category-background: #e9f2e6;
+            }
+
+            &:nth-child(3) {
+                --category-background: #e8eef8;
+            }
+
+            &:nth-child(4) {
+                --category-background: #f5edcf;
+            }
+
+            &:nth-child(5) {
+                --category-background: #eee7f5;
+            }
+
+            &:nth-child(6) {
+                --category-background: #f7e8d1;
+            }
+
+            &:hover {
+                border-color: var(--color-terracotta-light);
+                box-shadow: 0 0.45rem 0.65rem rgba(26, 26, 24, 0.14);
+                transform: translateY(-0.25rem);
+            }
+
+            &:focus-visible {
+                border-color: var(--color-forest);
+                outline: 3px solid var(--color-terracotta-light);
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    &-carousel {
+        margin-top: 2rem;
+    }
+
+    &-donate {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        margin-top: 2.5rem;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        background-color: var(--bg-dark-section);
+        color: var(--text-on-dark);
+        text-align: center;
+
+        &__title {
+            font-size: 1.5rem;
+        }
+
+        &__description,
+        > p:last-child {
+            color: rgba(253, 251, 247, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        &__process {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-width: 60rem;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        &__step {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 8.5rem;
+            padding: 0.75rem;
+            border: 1px solid rgba(253, 251, 247, 0.22);
+            border-top: 3px solid var(--color-terracotta);
+            border-radius: 0.75rem;
+            background-color: rgba(253, 251, 247, 0.08);
+            text-align: center;
+        }
+
+        &__step-title {
+            font-size: 1rem;
+        }
+
+        &__step-description {
+            margin-top: 0.25rem;
+            color: rgba(253, 251, 247, 0.72);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        &__action {
+            align-self: center;
+            padding: 0.7rem 1.1rem;
+            border: none;
+            border-radius: 999px;
+            background-color: var(--color-terracotta);
+            color: var(--color-ink);
+            font: inherit;
+            font-weight: $grosor-medio;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--color-terracotta-light);
+            }
+
+            &:focus-visible {
+                outline: 3px solid var(--color-terracotta);
+                outline-offset: 3px;
+            }
+        }
+    }
+
+    @include tablet {
+        &-container {
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        &-banner {
+            padding: 4rem 3rem;
+
+            &__actions {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        &__title {
+            max-width: 32rem;
+        }
+
+        &-categories {
+            padding-top: 3.5rem;
+
+            > div {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+            }
+
+            &__action {
+                min-height: 5rem;
+                padding-inline: 0.5rem;
+            }
+        }
+
+        &-donate {
+            padding: 2rem;
+
+            &__process {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 1.5rem;
+            }
+        }
+    }
+
+    @include desktop {
+        &-container {
+            padding-inline: 2rem;
+        }
+
+        &-banner {
+            padding: 5rem 4.5rem;
+        }
+
+        &-donate {
+            padding: 2.5rem 3rem;
+        }
+    }
+}
