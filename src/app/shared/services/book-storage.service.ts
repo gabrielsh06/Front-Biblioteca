@@ -62,6 +62,7 @@ export class BookStorageService {
         }
 
         localStorage.setItem(this.storageKey, JSON.stringify(books));
+        this.initialization = Promise.resolve(books);
     }
 
     saveBook(book: Book): void {

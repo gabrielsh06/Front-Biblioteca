@@ -1,5 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Book, BookOrigin, BookStatus } from '../../../../shared/models/book.model';
+import { BookStorageService } from '../../../../shared/services/book-storage.service';
 
 type AdminSection = 'dashboard' | 'books' | 'clients' | 'loans' | 'donations';
 
@@ -11,6 +13,7 @@ type AdminSection = 'dashboard' | 'books' | 'clients' | 'loans' | 'donations';
 })
 export class AdminPanel {
     private readonly route = inject(ActivatedRoute);
+    private readonly bookStorage = inject(BookStorageService);
     readonly section = this.route.snapshot.data['section'] as AdminSection;
     readonly searchTerm = signal('');
     readonly activeFilter = signal('Todos');
@@ -151,11 +154,13 @@ export class AdminPanel {
 
         const values = this.draft();
         if (this.modal() === 'book') {
+            const book = this.createBook(values);
+            this.bookStorage.saveBook(book);
             this.books.update((items) => [...items, [
                 values['title'], `${values['author']} · ${values['year']}`,
                 values['category'], values['isbn'], values['pages'], values['status'], values['origin'],
             ]]);
-            this.notice.set('Libro agregado visualmente al catálogo.');
+            this.notice.set('Libro agregado al catálogo.');
         } else {
             this.clients.update((items) => [...items, [
                 values['name'], values['email'], values['phone'], values['registeredAt'], '0', '0', values['status'],
@@ -164,6 +169,37 @@ export class AdminPanel {
         }
         this.closeModal();
         setTimeout(() => this.notice.set(''), 2500);
+    }
+
+    private createBook(values: Record<string, string>): Book {
+        return {
+            id: `book-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            title: values['title'].trim(),
+            author: values['author'].trim(),
+            publishedYear: Number(values['year']),
+            isbn: values['isbn'].trim(),
+            publisher: values['publisher'].trim(),
+            pages: Number(values['pages']),
+            genres: [values['category']],
+            status: this.toBookStatus(values['status']),
+            origin: this.toBookOrigin(values['origin']),
+            likesCount: 0,
+            synopsis: 'Este libro fue agregado al catálogo de la biblioteca.',
+        };
+    }
+
+    private toBookStatus(status: string): BookStatus {
+        const statuses: Record<string, BookStatus> = {
+            DISPONIBLE: 'available',
+            PRESTADO: 'checked-out',
+            'SOLO SALA': 'in-library',
+        };
+
+        return statuses[status] ?? 'unavailable';
+    }
+
+    private toBookOrigin(origin: string): BookOrigin {
+        return origin === 'DONADO' ? 'community-donation' : 'library-fund';
     }
 
     updateDonation(title: string, status: string): void {
