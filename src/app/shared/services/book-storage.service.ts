@@ -43,7 +43,9 @@ export class BookStorageService {
                 throw new Error('El contenido almacenado no es una lista de libros.');
             }
 
-            return books as Book[];
+            const normalizedBooks = (books as Book[]).map((book) => this.normalizeBook(book));
+            this.saveBooks(normalizedBooks);
+            return normalizedBooks;
         } catch (error) {
             console.error('No se pudieron leer los libros del almacenamiento local.', error);
             return [];
@@ -99,8 +101,19 @@ export class BookStorageService {
         const initialBooks = await firstValueFrom(
             this.http.get<Book[]>('/data/books.json'),
         );
-        this.saveBooks(initialBooks);
-        return initialBooks;
+        const normalizedBooks = initialBooks.map((book) => this.normalizeBook(book));
+        this.saveBooks(normalizedBooks);
+        return normalizedBooks;
+    }
+
+    private normalizeBook(book: Book): Book {
+        return {
+            ...book,
+            coverUrl: book.coverUrl?.replace(
+                'covers.openlibrary.org/isbn/',
+                'covers.openlibrary.org/b/isbn/',
+            ),
+        };
     }
 
     private isBrowser(): boolean {
