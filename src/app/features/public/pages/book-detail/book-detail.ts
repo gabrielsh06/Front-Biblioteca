@@ -1,8 +1,9 @@
-import { Component, input, output, computed, signal, inject } from '@angular/core';
+import { Component, output, computed, signal, inject } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Book, BOOK_STATUS_LABELS, BOOK_ORIGIN_LABELS } from '../../../../shared/models/book.model';
 import { BookCarousel } from '../../../../shared/components/book-carousel/book-carousel';
+import { BookStorageService } from '../../../../shared/services/book-storage.service';
 
 @Component({
     selector: 'app-book-detail',
@@ -12,10 +13,17 @@ import { BookCarousel } from '../../../../shared/components/book-carousel/book-c
 })
 export class BookDetail {
     private location = inject(Location);
+    private route = inject(ActivatedRoute);
+    private bookStorage = inject(BookStorageService);
 
-    book = input.required<Book>();
-    authorBooks = input<Book[]>([]);
-    relatedBooks = input<Book[]>([]);
+    book = signal<Book>({
+        id: '',
+        title: '',
+        author: '',
+        status: 'unavailable',
+    });
+    authorBooks = signal<Book[]>([]);
+    relatedBooks = signal<Book[]>([]);
 
     reserve = output<string>();
     toggleFavoriteEvent = output<string>();
@@ -30,6 +38,32 @@ export class BookDetail {
         const origin = this.book().origin;
         return origin ? (BOOK_ORIGIN_LABELS[origin] ?? origin) : 'Fondo de la Biblioteca';
     });
+
+    constructor() {
+        void this.loadBook();
+    }
+
+    private async loadBook(): Promise<void> {
+        const books = await this.bookStorage.loadBooks();
+        const bookId = this.route.snapshot.paramMap.get('id');
+        const selectedBook = bookId ? books.find((book) => book.id === bookId) : undefined;
+
+        if (!selectedBook) {
+            this.location.back();
+            return;
+        }
+
+        this.book.set(selectedBook);
+        this.authorBooks.set(
+            books.filter((book) => book.id !== selectedBook.id && book.author === selectedBook.author),
+        );
+        this.relatedBooks.set(
+            books.filter((book) =>
+                book.id !== selectedBook.id &&
+                book.genres?.some((genre) => selectedBook.genres?.includes(genre)),
+            ),
+        );
+    }
 
     onBack(): void {
         this.location.back();
