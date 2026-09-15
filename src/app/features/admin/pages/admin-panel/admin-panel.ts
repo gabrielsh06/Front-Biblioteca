@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Book, BookOrigin, BookStatus } from '../../../../shared/models/book.model';
+import { Book, BookOrigin, BookStatus, BOOK_ORIGIN_LABELS, BOOK_STATUS_LABELS } from '../../../../shared/models/book.model';
 import { BookStorageService } from '../../../../shared/services/book-storage.service';
 
 type AdminSection = 'dashboard' | 'books' | 'clients' | 'loans' | 'donations';
@@ -38,14 +38,7 @@ export class AdminPanel {
         { title: 'Historia del tiempo', donor: 'Julián Castro', date: '2026-09-13', status: 'PENDIENTE' },
     ]);
 
-    readonly books = signal<string[][]>([
-        ['Cien años de soledad', 'Gabriel García Márquez · 1967', 'Ficción', '978-84-397-0468-9', '471', 'DISPONIBLE', 'BIBLIOTECA'],
-        ['La casa de los espíritus', 'Isabel Allende · 1982', 'Ficción', '978-84-08-04254-3', '432', 'PRESTADO', 'BIBLIOTECA'],
-        ['El nombre del viento', 'Patrick Rothfuss · 2007', 'Ficción', '978-84-9800-235-4', '662', 'DISPONIBLE', 'DONADO'],
-        ['Rayuela', 'Julio Cortázar · 1963', 'Ficción', '978-84-376-0494-7', '600', 'SOLO SALA', 'BIBLIOTECA'],
-        ['El Alquimista', 'Paulo Coelho · 1988', 'Desarrollo Personal', '978-84-08-17432-1', '197', 'DISPONIBLE', 'DONADO'],
-        ['Pedro Páramo', 'Juan Rulfo · 1955', 'Ficción', '978-84-376-0093-2', '124', 'DISPONIBLE', 'BIBLIOTECA'],
-    ]);
+    readonly books = signal<string[][]>([]);
 
     readonly clients = signal<string[][]>([
         ['Diego Ramírez', 'diego@mail.com', '+34 634 567 890', '2023-11-05', '1', '27', 'ACTIVO'],
@@ -66,6 +59,15 @@ export class AdminPanel {
         ['Camila Ruiz', 'camila@mail.com', 'Babel', '2026-09-05', '2026-09-19', 'ACTIVO'],
         ['Sofía Martínez', 'sofia@mail.com', 'Orgullo y prejuicio', '2026-09-08', '2026-09-22', 'ACTIVO'],
     ]);
+
+    constructor() {
+        void this.loadStoredBooks();
+    }
+
+    private async loadStoredBooks(): Promise<void> {
+        const books = await this.bookStorage.loadBooks();
+        this.books.set(books.map((book) => this.toAdminBookRow(book)));
+    }
 
     get filteredBooks(): string[][] {
         const search = this.searchTerm().toLowerCase();
@@ -156,10 +158,7 @@ export class AdminPanel {
         if (this.modal() === 'book') {
             const book = this.createBook(values);
             this.bookStorage.saveBook(book);
-            this.books.update((items) => [...items, [
-                values['title'], `${values['author']} · ${values['year']}`,
-                values['category'], values['isbn'], values['pages'], values['status'], values['origin'],
-            ]]);
+            this.books.set(this.bookStorage.getBooks().map((storedBook) => this.toAdminBookRow(storedBook)));
             this.notice.set('Libro agregado al catálogo.');
         } else {
             this.clients.update((items) => [...items, [
@@ -186,6 +185,18 @@ export class AdminPanel {
             likesCount: 0,
             synopsis: 'Este libro fue agregado al catálogo de la biblioteca.',
         };
+    }
+
+    private toAdminBookRow(book: Book): string[] {
+        return [
+            book.title,
+            `${book.author} · ${book.publishedYear ?? 'Sin año'}`,
+            book.genres?.[0] ?? 'Sin categoría',
+            book.isbn ?? 'Sin ISBN',
+            String(book.pages ?? '—'),
+            BOOK_STATUS_LABELS[book.status].toUpperCase(),
+            book.origin ? BOOK_ORIGIN_LABELS[book.origin].toUpperCase() : 'SIN ORIGEN',
+        ];
     }
 
     private toBookStatus(status: string): BookStatus {
