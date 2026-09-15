@@ -34,14 +34,16 @@ export class Login {
     const credentials: LoginCredentials = this.form.getRawValue();
 
     // TODO: reemplazar por la llamada real al servicio de autenticación
-    // cuando exista el backend/endpoint de login. Por ahora, al validar
-    // el formulario en el front, se navega directo al panel de admin.
+    // cuando exista el backend/endpoint de login. Mientras tanto, se simula
+    // el rol a partir del correo: si contiene "admin", va al panel de admin;
+    // si no, va al sitio público (hasta que exista la vista de "perfil").
     this.isSubmitting.set(true);
     console.log('Login enviado:', credentials);
 
     setTimeout(() => {
       this.isSubmitting.set(false);
-      this.router.navigateByUrl('/admin');
+      const isAdmin = credentials.email.toLowerCase().includes('admin');
+      this.router.navigateByUrl(isAdmin ? '/admin' : '/');
     }, 600);
   }
 }
