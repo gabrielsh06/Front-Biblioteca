@@ -5,6 +5,7 @@ import { AdminPanel } from './features/admin/pages/admin-panel/admin-panel';
 import { Home } from './features/public/pages/home/home';
 import { Login } from './features/public/pages/login/login';
 import { BookDetail } from './features/public/pages/book-detail/book-detail';
+import { Catalog } from './features/public/pages/catalog/catalog';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,10 @@ export const routes: Routes = [
             {
                 path: 'books/:id',
                 component: BookDetail
+            },
+            {
+                path: 'catalogo',
+                component: Catalog
             }
         ]
     },
