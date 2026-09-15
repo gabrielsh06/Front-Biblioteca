@@ -3,7 +3,7 @@ import {Component} from "@angular/core";
 selector: 'extraer-nombre',
 imports: [],
 templateUrl: 'extraer-nombre.html',
-styleUrl: 'estraer-nombre.scss'
+styleUrl: 'extraer-nombre.scss'
 })
 
 export class ExtraerNombre{
@@ -16,4 +16,10 @@ const entregable = JSON.parse(datoGuardado);
 this.datoslocales = entregable;
 }
 
+	recargar(){
+	
+	this.extraer();
+	}
+	
+	
 }
