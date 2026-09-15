@@ -1,5 +1,5 @@
 @import({
-selector: 'teminos-condiciones-label',
+selector: 'terminos-condiciones-label',
 	import: [],
 	templateUrl: './terminos-condiciones.html',
 	styleUrl: './terminos-condiciones.scss'
