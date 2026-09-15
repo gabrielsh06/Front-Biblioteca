@@ -1,0 +1,68 @@
+[
+  {
+    "id": "book-1",
+    "title": "Cien años de soledad",
+    "author": "Gabriel García Márquez",
+    "status": "available",
+    "coverUrl": "https://covers.openlibrary.org/isbn/9780307474728-L.jpg",
+    "publishedYear": 1967,
+    "genres": ["Ficción"],
+    "likesCount": 98,
+    "synopsis": "La historia de la familia Buendía a través de varias generaciones en Macondo."
+  },
+  {
+    "id": "book-2",
+    "title": "El amor en los tiempos del cólera",
+    "author": "Gabriel García Márquez",
+    "status": "available",
+    "coverUrl": "https://covers.openlibrary.org/isbn/9780307389732-L.jpg",
+    "publishedYear": 1985,
+    "genres": ["Ficción"],
+    "likesCount": 84,
+    "synopsis": "Una historia de amor persistente que atraviesa el tiempo y las convenciones sociales."
+  },
+  {
+    "id": "book-3",
+    "title": "El principito",
+    "author": "Antoine de Saint-Exupéry",
+    "status": "available",
+    "coverUrl": "https://covers.openlibrary.org/isbn/9780156012195-L.jpg",
+    "publishedYear": 1943,
+    "genres": ["Infantil"],
+    "likesCount": 120,
+    "synopsis": "Un piloto conoce a un pequeño príncipe que viaja entre planetas haciendo preguntas esenciales."
+  },
+  {
+    "id": "book-4",
+    "title": "Rayuela",
+    "author": "Julio Cortázar",
+    "status": "checked-out",
+    "coverUrl": "https://covers.openlibrary.org/isbn/9780394740676-L.jpg",
+    "publishedYear": 1963,
+    "genres": ["Ficción"],
+    "likesCount": 76,
+    "synopsis": "Una novela abierta que invita a recorrer la historia de distintas maneras."
+  },
+  {
+    "id": "book-5",
+    "title": "Orgullo y prejuicio",
+    "author": "Jane Austen",
+    "status": "available",
+    "coverUrl": "https://covers.openlibrary.org/isbn/9780141439518-L.jpg",
+    "publishedYear": 1813,
+    "genres": ["Ficción"],
+    "likesCount": 91,
+    "synopsis": "Elizabeth Bennet enfrenta las expectativas sociales y sus propios prejuicios."
+  },
+  {
+    "id": "book-6",
+    "title": "Veinte poemas de amor y una canción desesperada",
+    "author": "Pablo Neruda",
+    "status": "in-library",
+    "coverUrl": "https://covers.openlibrary.org/isbn/9780143039965-L.jpg",
+    "publishedYear": 1924,
+    "genres": ["Poesía"],
+    "likesCount": 68,
+    "synopsis": "Una colección de poemas sobre el amor, la pérdida y el deseo."
+  }
+]

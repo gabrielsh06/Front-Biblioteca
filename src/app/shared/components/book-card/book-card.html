@@ -1,0 +1,21 @@
+<article class="book-card" [routerLink]="['/books', book().id]">
+    <div class="book-card__media">
+        <img [src]="book().coverUrl" [alt]="'Portada de ' + book().title" />
+    </div>
+    <div class="book-card__info">
+        <h3 class="book-card__title">{{ book().title }}</h3>
+        <p class="book-card__author">{{ book().author }}</p>
+        <p class="book-card__year">{{ book().publishedYear }}</p>
+        <div class="book-card__status" [class]="book().status">
+            <span class="book-card__status-dot"></span>
+            <span class="book-card__status-text">{{ statusText() }}</span>
+        </div>
+        <button
+            class="book-card__action"
+            type="button"
+            [disabled]="!isReservable()"
+            (click)="onActionClick($event)">
+                {{actionLabel()}}
+        </button>
+    </div>
+</article>
