@@ -189,6 +189,7 @@
 
     &-carousel {
         margin-top: 2rem;
+        min-width: 0;
     }
 
     &-donate {
@@ -312,12 +313,14 @@
 
     @include desktop {
         &-banner-container {
-            width: 1200px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         &__content {
-            width: 1200px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
