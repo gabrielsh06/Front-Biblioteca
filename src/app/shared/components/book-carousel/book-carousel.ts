@@ -30,12 +30,32 @@ export class BookCarousel implements OnInit, OnDestroy {
         this.stopAutoplay();
     }
 
+    private getScrollAmount(): number {
+        const element = this.track()?.nativeElement;
+        const firstItem = element?.querySelector<HTMLElement>('.book-carousel__item');
+
+        if (!element || !firstItem) {
+            return 0;
+        }
+
+        const styles = getComputedStyle(element);
+        const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+
+        return firstItem.offsetWidth + gap;
+    }
+
     scrollLeft(): void {
-        this.track()?.nativeElement.scrollBy({ left: -244, behavior: 'smooth' });
+        this.track()?.nativeElement.scrollBy({
+            left: -this.getScrollAmount(),
+            behavior: 'smooth',
+        });
     }
 
     scrollRight(): void {
-        this.track()?.nativeElement.scrollBy({ left: 244, behavior: 'smooth' });
+        this.track()?.nativeElement.scrollBy({
+            left: this.getScrollAmount(),
+            behavior: 'smooth',
+        });
     }
 
     onReserve(bookId: string): void {
@@ -50,7 +70,7 @@ export class BookCarousel implements OnInit, OnDestroy {
                 if (isEnd) {
                     el.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    el.scrollBy({ left: 244, behavior: 'smooth' });
+                    el.scrollBy({ left: this.getScrollAmount(), behavior: 'smooth' });
                 }
             }
         }, 4000);

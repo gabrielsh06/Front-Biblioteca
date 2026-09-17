@@ -384,11 +384,17 @@ h2 {
     color: #615b53;
     font-size: 0.72rem;
 }
-.modal input {
+.modal input,
+.modal textarea,
+.modal select {
     padding: 0.7rem;
     border: 1px solid #ded6cb;
     border-radius: 0.45rem;
     outline-color: #265141;
+    font: inherit;
+}
+.modal textarea {
+    resize: vertical;
 }
 .modal__actions {
     display: flex;

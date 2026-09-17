@@ -53,6 +53,7 @@
       @if (modal() === 'book') {
         <div class="form-grid">
           <label class="form-grid__full">Título<input required type="text" placeholder="Título del libro" [value]="draft()['title']" (input)="updateDraft('title', $event)" /></label>
+          <label class="form-grid__full">Sinopsis<textarea required rows="4" placeholder="Escribe una breve sinopsis del libro" [value]="draft()['synopsis']" (input)="updateDraft('synopsis', $event)"></textarea></label>
           <label>Autor<input required type="text" placeholder="Nombre del autor" [value]="draft()['author']" (input)="updateDraft('author', $event)" /></label>
           <label>Año<input required type="number" placeholder="2024" [value]="draft()['year']" (input)="updateDraft('year', $event)" /></label>
           <label>ISBN<input required type="text" placeholder="978-XX-XXX-XXXX-X" [value]="draft()['isbn']" (input)="updateDraft('isbn', $event)" /></label>
