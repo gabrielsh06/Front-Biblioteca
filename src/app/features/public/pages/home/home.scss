@@ -4,34 +4,35 @@
 .home {
     width: 100%;
 
-    &-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 1.5rem 1rem 3rem;
-    }
-
     &-banner {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        overflow: hidden;
-        padding: 2.5rem 1.25rem;
-        border-radius: 1.25rem;
-        background:
-            radial-gradient(circle at 100% 0%, rgba(212, 163, 115, 0.25), transparent 42%),
-            var(--bg-dark-section);
-        color: var(--text-on-dark);
+        background-image:
+            linear-gradient(rgba(44, 74, 62, 0.86), rgba(44, 74, 62, 0.86)),
+            radial-gradient(circle at 100% 0%, rgba(212, 163, 115, 0.25), transparent 50%),
+            url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1400&h=700&fit=crop&auto=format);
+        background-position: center, center, center;
+        background-repeat: no-repeat;
+        background-size: cover, cover, cover;
 
-        &::after {
-            position: absolute;
-            right: -4rem;
-            bottom: -5rem;
-            width: 12rem;
-            height: 12rem;
-            border: 1px solid rgba(253, 251, 247, 0.2);
-            border-radius: 50%;
-            content: '';
+        &-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow: hidden;
+            padding: 2.5rem 1.25rem;
+            color: var(--text-on-dark);
+            margin: 0 auto;
+
+            &::after {
+                position: absolute;
+                right: -4rem;
+                bottom: -5rem;
+                width: 12rem;
+                height: 12rem;
+                border: 1px solid rgba(253, 251, 247, 0.2);
+                border-radius: 50%;
+                content: '';
+            }
         }
 
         p {
@@ -115,6 +116,10 @@
         }
     }
 
+    &__content {
+        padding: 0 1rem;
+    }
+
     &-categories {
         padding: 2.5rem 0 1rem;
 
@@ -184,6 +189,7 @@
 
     &-carousel {
         margin-top: 2rem;
+        min-width: 0;
     }
 
     &-donate {
@@ -193,7 +199,6 @@
         align-items: center;
         margin-top: 2.5rem;
         padding: 1.5rem;
-        border-radius: 1rem;
         background-color: var(--bg-dark-section);
         color: var(--text-on-dark);
         text-align: center;
@@ -307,12 +312,16 @@
     }
 
     @include desktop {
-        &-container {
-            padding-inline: 2rem;
+        &-banner-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        &-banner {
-            padding: 5rem 4.5rem;
+        &__content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         &-donate {

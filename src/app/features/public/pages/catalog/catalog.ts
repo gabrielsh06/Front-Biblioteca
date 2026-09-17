@@ -87,7 +87,7 @@ export class Catalog {
         const sortedBooks = this.books()
             .filter((book) => {
                 const hasCategory = !category || book.genres?.some((genre) =>
-                    this.normalize(genre) === category,
+                    this.normalizeCategory(genre) === category,
                 );
                 const hasStatus = !status || book.status === status;
                 const hasOrigin = !origin || book.origin === origin;
@@ -118,5 +118,14 @@ export class Catalog {
             .toLowerCase()
             .replace(/-/g, ' ')
             .trim();
+    }
+
+    private normalizeCategory(value: string): string {
+        const category = this.categories.find((item) =>
+            this.normalize(item.slug) === this.normalize(value)
+            || this.normalize(item.label) === this.normalize(value),
+        );
+
+        return category ? this.normalize(category.slug) : this.normalize(value);
     }
 }

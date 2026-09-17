@@ -1,152 +1,65 @@
-<header class="navbar">
-    <div class="navbar__container">
-        <a class="navbar__brand" routerLink="/" (click)="closeMobileMenu()">
-            <span class="navbar__logo">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true">
+<header class="site-header">
+    <div class="site-header__bar">
+        <a class="site-header__brand" routerLink="/" aria-label="Biblioteca Abierta, inicio">
+            <span class="site-header__logo" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                     <path
                         fill="currentColor"
                         d="M96 128C96 92.7 124.7 64 160 64L288 64L288 576L160 576C124.7 576 96 547.3 96 512L96 128zM352 64L480 64C515.3 64 544 92.7 544 128L544 512C544 547.3 515.3 576 480 576L352 576L352 64z"
                     />
                 </svg>
             </span>
-            <span class="navbar__brand-text">
-                <span class="navbar__title">Biblioteca <em>Abierta</em></span>
-                <span class="navbar__tagline">Red comunitaria de libros</span>
+            <span class="site-header__brand-copy">
+                <strong class="site-header__title">Biblioteca <em>Abierta</em></strong>
+                <small class="site-header__tagline">Red comunitaria de libros</small>
             </span>
         </a>
 
-        <form class="navbar__search" role="search">
-            <svg
-                class="navbar__search-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                aria-hidden="true"
-            >
-                <path
-                    fill="currentColor"
-                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                />
+        <form class="site-header__search" role="search">
+            <label class="visually-hidden" for="site-search">Buscar en el catálogo</label>
+            <svg class="site-header__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 0 0 0 288z" />
             </svg>
-
-            <input
-                class="navbar__search-input"
-                type="search"
-                name="q"
-                placeholder="Buscar título, autor, ISBN..."
-                aria-label="Buscar en el catálogo"
-            />
+            <input id="site-search" class="site-header__search-input" type="search" name="q" placeholder="Buscar título, autor, ISBN..." />
         </form>
 
-        <nav class="navbar__links" aria-label="Categorías del catálogo">
+        <nav class="site-header__desktop-nav" aria-label="Navegación principal">
             @for (link of navLinks; track link.path) {
-                <a
-                    class="navbar__link"
-                    [routerLink]="link.path"
-                    routerLinkActive="navbar__link--active"
-                >
+                <a class="site-header__link" [routerLink]="link.path" routerLinkActive="site-header__link--active">
                     {{ link.label }}
                 </a>
             }
+            <a class="site-header__donate" routerLink="/donar">Donar libro</a>
         </nav>
 
-        <div class="navbar__actions">
-            <a class="navbar__donate" routerLink="/donar">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
-                    <path
-                        fill="currentColor"
-                        d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 227.1 74.5l28.9 27.9 28.9-27.9c28.2-27.5 68.5-36.6 107.9-29.1C462 58.7 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.5 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.1 11.9s-21.9-4.3-30.1-11.9z"
-                    />
+        <div class="site-header__actions">
+            <button class="site-header__cart" type="button" aria-label="Carrito de libros">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path fill="currentColor" d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22.4 0 42.1 15.5 47 37.1L122.3 64 512 64c35.3 0 64 28.7 64 64 0 7.1-1.2 14.2-3.5 20.9L527.6 304.6C518.2 331.6 492.8 352 464.2 352L176 352l9.6 48L464 400c13.3 0 24 10.7 24 24s-10.7 24-24 24L166.8 448c-23 0-42.8-16.4-47-39L76.1 76.6 24 76.6C10.7 76.6 0 65.9 0 52.6L0 24zM176 480a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm256 32a32 32 0 1 1 64 0 32 32 0 1 1-64 0z" />
                 </svg>
-                <span>Donar libro</span>
-            </a>
-            <button class="navbar__icon-btn" type="button" aria-label="Notificaciones">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true">
-                    <path
-                        fill="currentColor"
-                        d="M224 0c-17.7 0-32 14.3-32 32l0 19.2C119 66 64 130.6 64 208l0 25.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416l400 0c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4l0-25.4c0-77.4-55-142-128-156.8L256 32c0-17.7-14.3-32-32-32zm0 96c61.9 0 112 50.1 112 112l0 25.4c0 47.9 13.9 94.6 39.7 134.6L72.3 368C98.1 328 112 281.3 112 233.4l0-25.4c0-61.9 50.1-112 112-112zm64 352l-128 0c0 17 6.7 33.3 18.7 45.3S207 512 224 512s33.3-6.7 45.3-18.7S288 465 288 448z"
-                    />
-                </svg>
-                @if (notificationsCount() > 0) {
-                    <span class="navbar__badge">{{ notificationsCount() }}</span>
-                }
             </button>
-            <a class="navbar__account" routerLink="/login">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true">
-                    <path
-                        fill="currentColor"
-                        d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
-                    />
-                </svg>
-                <span>Cuenta</span>
-            </a>
-            <button
-                class="navbar__toggle"
-                type="button"
-                aria-label="Abrir menú de navegación"
-                [attr.aria-expanded]="isMobileMenuOpen()"
-                (click)="toggleMobileMenu()"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <a class="site-header__account" routerLink="/login">Cuenta</a>
+            <details class="site-header__menu">
+                <summary aria-label="Abrir menú de navegación">
+                    <span></span><span></span><span></span>
+                </summary>
+                <div class="site-header__panel">
+                    <form class="site-header__search site-header__search--panel" role="search">
+                        <label class="visually-hidden" for="panel-search">Buscar en el catálogo</label>
+                        <svg class="site-header__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+                            <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 0 0 0 288z" />
+                        </svg>
+                        <input id="panel-search" class="site-header__search-input" type="search" name="q-panel" placeholder="Buscar título, autor, ISBN..." />
+                    </form>
+                    <nav class="site-header__panel-links" aria-label="Navegación del menú">
+                        @for (link of navLinks; track link.path) {
+                            <a class="site-header__link" [routerLink]="link.path">{{ link.label }}</a>
+                        }
+                        <a class="site-header__link" routerLink="/donar">Donar libro</a>
+                        <a class="site-header__link" routerLink="/login">Cuenta</a>
+                    </nav>
+                </div>
+            </details>
         </div>
     </div>
-    
-    <nav class="navbar__categories" aria-label="Categorías de libros">
-        @for (category of categories; track category.slug) {
-            <a
-                class="navbar__category"
-                routerLink="/catalogo"
-                [queryParams]="{ categoria: category.slug }"
-                routerLinkActive="navbar__category--active"
-                [routerLinkActiveOptions]="{ exact: false, queryParams: 'exact', paths: 'subset' }"
-            >
-                <span class="navbar__category-icon">{{ category.icon }}</span>
-                <span>{{ category.label }}</span>
-            </a>
-        }
-    </nav>
-
-    @if (isMobileMenuOpen()) {
-        <div class="navbar__mobile-panel">
-            <form class="navbar__search navbar__search--mobile" role="search">
-                <svg
-                    class="navbar__search-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    aria-hidden="true"
-                >
-                    <path
-                        fill="currentColor"
-                        d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                    />
-                </svg>
-                <input
-                    class="navbar__search-input"
-                    type="search"
-                    name="q-mobile"
-                    placeholder="Buscar título, autor, ISBN..."
-                    aria-label="Buscar en el catálogo"
-                />
-            </form>
-
-            <nav class="navbar__mobile-links" aria-label="Categorías del catálogo">
-                @for (link of navLinks; track link.path) {
-                    <a
-                        class="navbar__link"
-                        [routerLink]="link.path"
-                        routerLinkActive="navbar__link--active"
-                        (click)="closeMobileMenu()"
-                    >
-                        {{ link.label }}
-                    </a>
-                }
-                <a class="navbar__donate" routerLink="/donar" (click)="closeMobileMenu()"
-                    >Donar libro</a
-                >
-                <a class="navbar__link" routerLink="/login" (click)="closeMobileMenu()">Cuenta</a>
-            </nav>
-        </div>
-    }
 </header>
