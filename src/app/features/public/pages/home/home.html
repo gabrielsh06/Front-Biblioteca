@@ -1,6 +1,6 @@
 <main class="home">
-    <div class="home-container">
-        <section class="home-banner">
+    <section class="home-banner">
+        <div class="home-banner-container">
             <h1 class="home__title">
                 El saber,
                 <em>compartido</em>
@@ -22,7 +22,9 @@
                     Donar libros
                 </button>
             </div>
-        </section>
+        </div>
+    </section>
+    <div class="home__content">
         <section class="home-categories">
             <h2 class="home-categories__title">Categorías</h2>
             <div>
@@ -49,27 +51,27 @@
                 [books]="popularBooks()">
             </app-book-carousel>
         </section>
-        <article class="home-donate">
-            <h2 class="home-donate__title">Presta o Dona un Libro</h2>
-            <p class="home-donate__description">Cada libro que donas viaja a nuevas manos. Tres pasos simples para que tu ejemplar forme parte de nuestra biblioteca</p>
-            <div class="home-donate__process">
-                <div class="home-donate__step">
-                    <h3 class="home-donate__step-title">Toma una foto</h3>
-                    <p class="home-donate__step-description">Fotografía la portada, contraportada y estado general del libro que deseas donar.</p>
-                </div>
-                <div class="home-donate__step">
-                    <h3 class="home-donate__step-title">Completa tus datos</h3>
-                    <p class="home-donate__step-description">Haz que otros puedan disfrutar de tu libro prestandolo.</p>
-                </div>
-                <div class="home-donate__step">
-                    <h3 class="home-donate__step-title">Entrégalo aprobado</h3>
-                    <p class="home-donate__step-description">Al ser aprobado, coordina la entrega en nuestra sede.</p>
-                </div>
-            </div>
-            <button class="home-donate__action" type="button" [routerLink]="['/donate']">
-                Registrar mi libro
-            </button>
-            <p>Revisamos cada donación en menos de 48 horas.</p>
-        </article>
     </div>
+    <article class="home-donate">
+        <h2 class="home-donate__title">Presta o Dona un Libro</h2>
+        <p class="home-donate__description">Cada libro que donas viaja a nuevas manos. Tres pasos simples para que tu ejemplar forme parte de nuestra biblioteca</p>
+        <div class="home-donate__process">
+            <div class="home-donate__step">
+                <h3 class="home-donate__step-title">Toma una foto</h3>
+                <p class="home-donate__step-description">Fotografía la portada, contraportada y estado general del libro que deseas donar.</p>
+            </div>
+            <div class="home-donate__step">
+                <h3 class="home-donate__step-title">Completa tus datos</h3>
+                <p class="home-donate__step-description">Haz que otros puedan disfrutar de tu libro prestandolo.</p>
+            </div>
+            <div class="home-donate__step">
+                <h3 class="home-donate__step-title">Entrégalo aprobado</h3>
+                <p class="home-donate__step-description">Al ser aprobado, coordina la entrega en nuestra sede.</p>
+            </div>
+        </div>
+        <button class="home-donate__action" type="button" [routerLink]="['/donate']">
+            Registrar mi libro
+        </button>
+        <p>Revisamos cada donación en menos de 48 horas.</p>
+    </article>
 </main>
