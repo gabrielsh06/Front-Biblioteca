@@ -123,7 +123,7 @@ export class AdminPanel {
         this.modal.set(type);
         this.formError.set('');
         this.draft.set(type === 'book' ? {
-            title: '', author: '', year: new Date().getFullYear().toString(), isbn: '',
+            title: '', synopsis: '', author: '', year: new Date().getFullYear().toString(), isbn: '',
             publisher: '', pages: '', category: 'Ficción', status: 'DISPONIBLE', origin: 'BIBLIOTECA',
         } : {
             name: '', email: '', phone: '', registeredAt: new Date().toISOString().slice(0, 10), status: 'ACTIVO',
@@ -137,13 +137,13 @@ export class AdminPanel {
     }
 
     updateDraft(field: string, event: Event): void {
-        this.draft.update((current) => ({ ...current, [field]: (event.target as HTMLInputElement | HTMLSelectElement).value }));
+        this.draft.update((current) => ({ ...current, [field]: (event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement).value }));
         this.formError.set('');
     }
 
     get isDraftComplete(): boolean {
         const fields = this.modal() === 'book'
-            ? ['title', 'author', 'year', 'isbn', 'publisher', 'pages', 'category', 'status', 'origin']
+            ? ['title', 'synopsis', 'author', 'year', 'isbn', 'publisher', 'pages', 'category', 'status', 'origin']
             : ['name', 'email', 'phone', 'registeredAt', 'status'];
         return fields.every((field) => Boolean(this.draft()[field]?.trim()));
     }
@@ -183,7 +183,7 @@ export class AdminPanel {
             status: this.toBookStatus(values['status']),
             origin: this.toBookOrigin(values['origin']),
             likesCount: 0,
-            synopsis: 'Este libro fue agregado al catálogo de la biblioteca.',
+            synopsis: values['synopsis'].trim(),
         };
     }
 
