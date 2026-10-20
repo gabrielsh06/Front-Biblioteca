@@ -2,10 +2,15 @@ import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookCard } from '../../../../shared/components/book-card/book-card';
-import { Book, BOOK_ORIGIN_LABELS, BOOK_STATUS_LABELS, PARENT_CATEGORIES } from '../../../../shared/models/book.model';
-import { BookStorageService } from '../../../../shared/services/book-storage.service';
+import { BookCategory, BookResponse } from '../../../../shared/models/book.model';
+import { BookService } from '../../../../shared/services/book.service';
 
 type SortOption = 'relevance' | 'recent' | 'title' | 'author';
+
+interface CategoryOption {
+    slug: BookCategory;
+    label: string;
+}
 
 @Component({
     selector: 'app-catalog',
@@ -17,44 +22,72 @@ export class Catalog {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
     private readonly destroyRef = inject(DestroyRef);
-    private readonly bookStorage = inject(BookStorageService);
+    private readonly bookService = inject(BookService);
+    private searchTimer?: ReturnType<typeof setTimeout>;
 
-    readonly books = signal<Book[]>([]);
-    readonly filteredBooks = signal<Book[]>([]);
-    readonly visibleBooks = computed(() => this.filteredBooks().slice(0, 12));
+    readonly categories: CategoryOption[] = [
+        { slug: 'FICTION', label: 'Ficción' },
+        { slug: 'NON_FICTION', label: 'No ficción' },
+        { slug: 'POETRY', label: 'Poesía' },
+        { slug: 'SCIENCE_FICTION', label: 'Ciencia ficción' },
+        { slug: 'CHILDREN', label: 'Infantil' },
+        { slug: 'PERSONAL_DEVELOPMENT', label: 'Desarrollo personal' },
+    ];
+    readonly books = signal<BookResponse[]>([]);
     readonly isFilterOpen = signal(false);
-    readonly categories = PARENT_CATEGORIES;
-    readonly statuses = Object.entries(BOOK_STATUS_LABELS) as [Book['status'], string][];
-    readonly origins = Object.entries(BOOK_ORIGIN_LABELS) as [NonNullable<Book['origin']>, string][];
+    readonly isLoading = signal(false);
+    readonly error = signal('');
     readonly sort = signal<SortOption>('relevance');
-    readonly selectedCategory = signal('');
-    readonly selectedStatus = signal('');
-    readonly selectedOrigin = signal('');
+    readonly selectedCategory = signal<BookCategory | ''>('');
+    readonly searchTerm = signal('');
+    readonly page = signal(1);
+    readonly totalElements = signal(0);
+    readonly totalPages = signal(0);
+    readonly hasPreviousPage = computed(() => this.page() > 1);
+    readonly hasNextPage = computed(() => this.page() < this.totalPages());
 
     constructor() {
         this.route.queryParamMap
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((params) => {
-                this.selectedCategory.set(params.get('categoria') ?? params.get('category') ?? '');
-                this.selectedStatus.set(params.get('disponibilidad') ?? '');
-                this.selectedOrigin.set(params.get('origen') ?? '');
+                this.searchTerm.set(params.get('search') ?? '');
+                this.selectedCategory.set(this.toCategory(params.get('categoria') ?? params.get('category')));
                 this.sort.set((params.get('orden') as SortOption) || 'relevance');
-                this.applyFilters();
+                this.page.set(Math.max(1, Number(params.get('page')) || 1));
+                this.loadBooks();
             });
 
-        void this.loadBooks();
+        this.destroyRef.onDestroy(() => clearTimeout(this.searchTimer));
     }
 
-    private async loadBooks(): Promise<void> {
-        const books = await this.bookStorage.loadBooks();
-        this.books.set(books);
-        this.applyFilters();
+    onSearchInput(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
+        clearTimeout(this.searchTimer);
+        this.searchTimer = setTimeout(() => {
+            void this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams: { search: value.trim() || null, page: null },
+                queryParamsHandling: 'merge',
+            });
+        }, 350);
     }
 
-    updateFilter(name: 'categoria' | 'disponibilidad' | 'origen' | 'orden', value: string): void {
+    updateFilter(name: 'categoria' | 'orden', value: string): void {
         void this.router.navigate([], {
             relativeTo: this.route,
-            queryParams: { [name]: value || null },
+            queryParams: { [name]: value || null, page: null },
+            queryParamsHandling: 'merge',
+        });
+    }
+
+    goToPage(page: number): void {
+        if (page < 1 || page > this.totalPages() || page === this.page()) {
+            return;
+        }
+
+        void this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page: page === 1 ? null : page },
             queryParamsHandling: 'merge',
         });
     }
@@ -63,11 +96,11 @@ export class Catalog {
         void this.router.navigate([], {
             relativeTo: this.route,
             queryParams: {
+                search: null,
                 categoria: null,
                 category: null,
-                disponibilidad: null,
-                origen: null,
                 orden: null,
+                page: null,
             },
         });
     }
@@ -80,52 +113,49 @@ export class Catalog {
         this.isFilterOpen.set(false);
     }
 
-    private applyFilters(): void {
-        const category = this.normalize(this.selectedCategory());
-        const status = this.selectedStatus();
-        const origin = this.selectedOrigin();
-        const sortedBooks = this.books()
-            .filter((book) => {
-                const hasCategory = !category || book.genres?.some((genre) =>
-                    this.normalizeCategory(genre) === category,
-                );
-                const hasStatus = !status || book.status === status;
-                const hasOrigin = !origin || book.origin === origin;
-                return hasCategory && hasStatus && hasOrigin;
-            })
-            .sort((first, second) => this.compareBooks(first, second));
+    private loadBooks(): void {
+        this.isLoading.set(true);
+        this.error.set('');
 
-        this.filteredBooks.set(sortedBooks);
+        this.bookService.getBooks({
+            search: this.searchTerm() || undefined,
+            category: this.selectedCategory() || undefined,
+            page: this.page() - 1,
+            size: 12,
+            sort: [this.toSortParam(this.sort())],
+        })
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (response) => {
+                    this.books.set(response.content);
+                    this.totalElements.set(response.totalElements);
+                    this.totalPages.set(response.totalPages);
+                    this.isLoading.set(false);
+                },
+                error: () => {
+                    this.books.set([]);
+                    this.totalElements.set(0);
+                    this.totalPages.set(0);
+                    this.error.set('No se pudo cargar el catálogo. Intenta nuevamente.');
+                    this.isLoading.set(false);
+                },
+            });
     }
 
-    private compareBooks(first: Book, second: Book): number {
-        switch (this.sort()) {
-            case 'recent':
-                return (second.publishedYear ?? 0) - (first.publishedYear ?? 0);
-            case 'title':
-                return first.title.localeCompare(second.title);
-            case 'author':
-                return first.author.localeCompare(second.author);
-            default:
-                return (second.likesCount ?? 0) - (first.likesCount ?? 0);
-        }
+    private toCategory(value: string | null): BookCategory | '' {
+        return this.categories.some((category) => category.slug === value)
+            ? (value as BookCategory)
+            : '';
     }
 
-    private normalize(value: string): string {
-        return value
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .replace(/-/g, ' ')
-            .trim();
-    }
+    private toSortParam(sort: SortOption): string {
+        const sortParams: Record<SortOption, string> = {
+            relevance: 'likesCount,desc',
+            recent: 'publishedDate,desc',
+            title: 'title,asc',
+            author: 'author,asc',
+        };
 
-    private normalizeCategory(value: string): string {
-        const category = this.categories.find((item) =>
-            this.normalize(item.slug) === this.normalize(value)
-            || this.normalize(item.label) === this.normalize(value),
-        );
-
-        return category ? this.normalize(category.slug) : this.normalize(value);
+        return sortParams[sort];
     }
 }

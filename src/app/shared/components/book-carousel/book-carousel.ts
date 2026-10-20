@@ -1,7 +1,7 @@
 import { Component, input, output, ElementRef, viewChild, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BookCard } from '../book-card/book-card';
-import { Book } from '../../models/book.model';
+import { BookResponse } from '../../models/book.model';
 
 @Component({
     selector: 'app-book-carousel',
@@ -15,8 +15,8 @@ export class BookCarousel implements OnInit, OnDestroy {
     private autoplayInterval: any;
 
     title = input<string>('Libros recomendados');
-    books = input<Book[]>([]);
-    reserveEvent = output<string>();
+    books = input<BookResponse[]>([]);
+    reserveEvent = output<number>();
 
     track = viewChild<ElementRef<HTMLElement>>('track');
 
@@ -58,7 +58,7 @@ export class BookCarousel implements OnInit, OnDestroy {
         });
     }
 
-    onReserve(bookId: string): void {
+    onReserve(bookId: number): void {
         this.reserveEvent.emit(bookId);
     }
 
