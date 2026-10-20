@@ -1,57 +1,78 @@
-export type BookStatus = 'available' | 'checked-out' | 'unavailable' | 'in-library';
-export type BookOrigin = 'library-fund' | 'community-donation' | 'purchased';
+export type BookCategory =
+  | 'FICTION'
+  | 'NON_FICTION'
+  | 'POETRY'
+  | 'SCIENCE_FICTION'
+  | 'CHILDREN'
+  | 'PERSONAL_DEVELOPMENT';
 
-export interface ParentCategory {
-    label: string;
-    slug: string;
+export type BookStatus = 'AVAILABLE' | 'CHECKED_OUT' | 'UNAVAILABLE' | 'IN_LIBRARY';
+
+export type BookOrigin = 'LIBRARY_FUND' | 'COMMUNITY_DONATION' | 'PURCHASED';
+
+export interface BookResponse {
+  id: number;
+  title: string;
+  author: string;
+  bookStatus: BookStatus;
+  bookOrigin: BookOrigin;
+  likesCount: number;
+  coverUrl: string;
+  ISBN: string;
+  sku?: string;
+  publisher?: string;
+  publishedDate?: string;
+  edition?: string;
+  pages?: number;
+  stock: number;
+  category: BookCategory[];
+  active: boolean;
 }
 
-export const PARENT_CATEGORIES: ParentCategory[] = [
-    { label: 'Ficción', slug: 'fiction' },
-    { label: 'No ficción', slug: 'non-fiction' },
-    { label: 'Poesía', slug: 'poetry' },
-    { label: 'Ciencia Ficción', slug: 'science-fiction' },
-    { label: 'Infantil', slug: 'children' },
-    { label: 'Desarrollo Personal', slug: 'personal-development' },
-];
-
-export interface Book {
-    id: string;
-    title: string;
-    author: string;
-    price?: number;
-    status: BookStatus;
-    origin?: BookOrigin;
-    likesCount?: number;
-    coverUrl?: string;
-    isbn?: string;
-    sku?: string;
-    publisher?: string;
-    publishedYear?: number;
-    edition?: string;
-    pages?: number;
-    stock?: number;
-    language?: string;
-    synopsis?: string;
-    targetAge?: string;
-    genres?: string[];
-    dimensions?: {
-        heightCm?: number;
-        widthCm?: number;
-        thicknessCm?: number;
-        weightGrams?: number;
-    };
+export interface BookCreateRequest {
+  title: string;
+  author: string;
+  bookStatus?: BookStatus;
+  bookOrigin?: BookOrigin;
+  coverUrl?: string;
+  ISBN: string;
+  sku?: string;
+  publisher?: string;
+  publishedDate?: string;
+  edition?: string;
+  pages?: number;
+  stock: number;
+  category: BookCategory[];
 }
 
-export const BOOK_STATUS_LABELS: Record<BookStatus, string> = {
-    'available': 'Disponible',
-    'checked-out': 'Prestado',
-    'unavailable': 'No disponible',
-    'in-library': 'En biblioteca'
-};
+export type BookUpdateRequest = BookCreateRequest;
 
-export const BOOK_ORIGIN_LABELS: Record<BookOrigin, string> = {
-    'library-fund': 'Fondo de la Biblioteca',
-    'community-donation': 'Donado por la comunidad',
-    'purchased': 'Comprado'
-};
+export interface BookLookupResponse {
+  title: string;
+  author: string;
+  coverUrl: string;
+  ISBN: string;
+  publisher: string;
+  publishedDate: string;
+  pages: number;
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  isFirst: boolean;
+  isLast: boolean;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
+
+export interface BookQueryParams {
+  search?: string;
+  category?: BookCategory;
+  page?: number;
+  size?: number;
+  sort?: string[];
+}

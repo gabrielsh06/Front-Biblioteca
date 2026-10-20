@@ -45,16 +45,11 @@
             </div>
             <div class="book-info__main">
                 <div class="book-info__header">
-                    @if (book().genres && book().genres!.length > 0) {
-                        <span class="book-info__category">{{ book().genres![0] | uppercase }}</span>
+                    @if (book().category.length > 0) {
+                        <span class="book-info__category">{{ categoriesText() | uppercase }}</span>
                     }
                     <h1 class="book-info__title">{{ book().title }}</h1>
                     <p class="book-info__author">{{ book().author }}</p>
-                </div>
-                <hr class="book-info__divider">
-                <div class="book-info__body">
-                    <h2 class="book-info__synopsis">Sinopsis</h2>
-                    <p class="book-info__description">{{ book().synopsis }}</p>
                 </div>
             </div>
             <div class="book-info__aside">
@@ -84,10 +79,10 @@
                 <section class="book-info__specs">
                     <h2 class="book-info__specs-title">CARACTERÍSTICAS</h2>
                     <dl class="book-info__specs-list">
-                        @if (book().isbn) {
+                        @if (book().ISBN) {
                             <div class="book-info__spec-item">
                                 <dt class="book-info__spec-label">ISBN</dt>
-                                <dd class="book-info__spec-value">{{ book().isbn }}</dd>
+                                <dd class="book-info__spec-value">{{ book().ISBN }}</dd>
                             </div>
                         }
                         @if (book().author) {
@@ -102,10 +97,10 @@
                                 <dd class="book-info__spec-value">{{ book().publisher }}</dd>
                             </div>
                         }
-                        @if (book().publishedYear) {
+                        @if (book().publishedDate) {
                             <div class="book-info__spec-item">
-                                <dt class="book-info__spec-label">AÑO</dt>
-                                <dd class="book-info__spec-value">{{ book().publishedYear }}</dd>
+                                <dt class="book-info__spec-label">FECHA DE PUBLICACIÓN</dt>
+                                <dd class="book-info__spec-value">{{ book().publishedDate }}</dd>
                             </div>
                         }
                         @if (book().pages) {
@@ -114,30 +109,22 @@
                                 <dd class="book-info__spec-value">{{ book().pages }}</dd>
                             </div>
                         }
-                        @if (book().language) {
-                            <div class="book-info__spec-item">
-                                <dt class="book-info__spec-label">IDIOMA</dt>
-                                <dd class="book-info__spec-value">{{ book().language }}</dd>
-                            </div>
-                        }
                         @if (book().edition) {
                             <div class="book-info__spec-item">
                                 <dt class="book-info__spec-label">EDICIÓN</dt>
                                 <dd class="book-info__spec-value">{{ book().edition }}</dd>
                             </div>
                         }
-                        @if (book().targetAge) {
+                        @if (book().category.length > 0) {
                             <div class="book-info__spec-item">
-                                <dt class="book-info__spec-label">EDAD</dt>
-                                <dd class="book-info__spec-value">{{ book().targetAge }}</dd>
+                                <dt class="book-info__spec-label">CATEGORÍA</dt>
+                                <dd class="book-info__spec-value">{{ categoriesText() }}</dd>
                             </div>
                         }
-                        @if (book().genres && book().genres!.length > 0) {
-                            <div class="book-info__spec-item">
-                                <dt class="book-info__spec-label">CATEGORIA</dt>
-                                <dd class="book-info__spec-value">{{ book().genres!.join(', ') }}</dd>
-                            </div>
-                        }
+                        <div class="book-info__spec-item">
+                            <dt class="book-info__spec-label">STOCK</dt>
+                            <dd class="book-info__spec-value">{{ book().stock }}</dd>
+                        </div>
                         <div class="book-info__spec-item">
                             <dt class="book-info__spec-label">ORIGEN</dt>
                             <dd class="book-info__spec-value">{{ originText() }}</dd>

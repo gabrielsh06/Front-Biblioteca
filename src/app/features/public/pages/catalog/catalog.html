@@ -32,35 +32,15 @@
                 </div>
 
                 <fieldset>
-                    <legend>Disponibilidad</legend>
-                    @for (status of statuses; track status[0]) {
-                        <label class="catalog__check">
-                            <input
-                                type="radio"
-                                name="status"
-                                [checked]="selectedStatus() === status[0]"
-                                (change)="updateFilter('disponibilidad', status[0])">
-                            <span>{{ status[1] }}</span>
-                        </label>
-                    }
-                </fieldset>
-
-                <fieldset>
-                    <legend>Origen</legend>
-                    @for (origin of origins; track origin[0]) {
-                        <label class="catalog__check">
-                            <input
-                                type="radio"
-                                name="origin"
-                                [checked]="selectedOrigin() === origin[0]"
-                                (change)="updateFilter('origen', origin[0])">
-                            <span>{{ origin[1] }}</span>
-                        </label>
-                    }
-                </fieldset>
-
-                <fieldset>
                     <legend>Categorías</legend>
+                    <label class="catalog__check">
+                        <input
+                            type="radio"
+                            name="category"
+                            [checked]="selectedCategory() === ''"
+                            (change)="updateFilter('categoria', '')">
+                        <span>Todas</span>
+                    </label>
                     @for (category of categories; track category.slug) {
                         <label class="catalog__check">
                             <input
@@ -82,7 +62,15 @@
 
             <section class="catalog__results" aria-live="polite">
                 <div class="catalog__results-header">
-                    <p><strong>{{ filteredBooks().length }}</strong> libros encontrados</p>
+                    <p><strong>{{ totalElements() }}</strong> libros encontrados</p>
+                    <label class="catalog__sort-desktop">
+                        <span>Buscar</span>
+                        <input
+                            type="search"
+                            placeholder="Título, autor o ISBN..."
+                            [value]="searchTerm()"
+                            (input)="onSearchInput($event)">
+                    </label>
                     <label class="catalog__sort-desktop">
                         <span>Ordenar por</span>
                         <select [value]="sort()" (change)="updateFilter('orden', $any($event.target).value)">
@@ -94,12 +82,31 @@
                     </label>
                 </div>
 
-                @if (filteredBooks().length > 0) {
+                @if (isLoading()) {
+                    <div class="catalog__empty">
+                        <h2>Cargando catálogo...</h2>
+                    </div>
+                } @else if (error()) {
+                    <div class="catalog__empty">
+                        <h2>{{ error() }}</h2>
+                        <button type="button" (click)="clearFilters()">Volver a intentar</button>
+                    </div>
+                } @else if (books().length > 0) {
                     <div class="catalog__grid">
-                        @for (book of visibleBooks(); track book.id) {
+                        @for (book of books(); track book.id) {
                             <app-book-card [book]="book"></app-book-card>
                         }
                     </div>
+
+                    <nav class="catalog__pagination" aria-label="Paginación del catálogo">
+                        <button type="button" [disabled]="!hasPreviousPage()" (click)="goToPage(page() - 1)">
+                            Anterior
+                        </button>
+                        <span>Página {{ page() }} de {{ totalPages() || 1 }}</span>
+                        <button type="button" [disabled]="!hasNextPage()" (click)="goToPage(page() + 1)">
+                            Siguiente
+                        </button>
+                    </nav>
                 } @else {
                     <div class="catalog__empty">
                         <h2>No encontramos libros</h2>

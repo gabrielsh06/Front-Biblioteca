@@ -38,7 +38,15 @@
                     <path fill="currentColor" d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22.4 0 42.1 15.5 47 37.1L122.3 64 512 64c35.3 0 64 28.7 64 64 0 7.1-1.2 14.2-3.5 20.9L527.6 304.6C518.2 331.6 492.8 352 464.2 352L176 352l9.6 48L464 400c13.3 0 24 10.7 24 24s-10.7 24-24 24L166.8 448c-23 0-42.8-16.4-47-39L76.1 76.6 24 76.6C10.7 76.6 0 65.9 0 52.6L0 24zM176 480a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm256 32a32 32 0 1 1 64 0 32 32 0 1 1-64 0z" />
                 </svg>
             </button>
-            <a class="site-header__account" routerLink="/login">Cuenta</a>
+            @if (authService.isAuthenticated()) {
+                <span class="site-header__account">{{ displayName() }}</span>
+                @if (authService.isAdmin()) {
+                    <a class="site-header__account" routerLink="/admin">Panel</a>
+                }
+                <button class="site-header__account" type="button" (click)="logout()">Cerrar sesión</button>
+            } @else {
+                <a class="site-header__account" routerLink="/login">Cuenta</a>
+            }
             <details class="site-header__menu">
                 <summary aria-label="Abrir menú de navegación">
                     <span></span><span></span><span></span>
@@ -56,7 +64,15 @@
                             <a class="site-header__link" [routerLink]="link.path">{{ link.label }}</a>
                         }
                         <a class="site-header__link" routerLink="/donar">Donar libro</a>
-                        <a class="site-header__link" routerLink="/login">Cuenta</a>
+                        @if (authService.isAuthenticated()) {
+                            <span class="site-header__link">{{ displayName() }}</span>
+                            @if (authService.isAdmin()) {
+                                <a class="site-header__link" routerLink="/admin">Panel</a>
+                            }
+                            <button class="site-header__link" type="button" (click)="logout()">Cerrar sesión</button>
+                        } @else {
+                            <a class="site-header__link" routerLink="/login">Cuenta</a>
+                        }
                     </nav>
                 </div>
             </details>
