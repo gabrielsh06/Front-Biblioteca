@@ -94,6 +94,10 @@
 
             <a class="login__forgot" routerLink="/recuperar-password">¿Olvidaste tu contraseña?</a>
 
+            @if (errorMessage()) {
+                <p class="login__error login__error--server" role="alert">{{ errorMessage() }}</p>
+            }
+
             <button class="login__submit" type="submit" [disabled]="isSubmitting()">
                 {{ isSubmitting() ? 'Ingresando...' : 'Iniciar sesión' }}
             </button>

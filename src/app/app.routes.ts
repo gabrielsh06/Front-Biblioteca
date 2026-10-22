@@ -6,6 +6,7 @@ import { Home } from './features/public/pages/home/home';
 import { Login } from './features/public/pages/login/login';
 import { BookDetail } from './features/public/pages/book-detail/book-detail';
 import { Catalog } from './features/public/pages/catalog/catalog';
+import { adminGuard } from './shared/guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,7 @@ export const routes: Routes = [
     { 
         path: 'admin', 
         component: AdminLayout,
+        canActivate: [adminGuard],
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
             { path: 'dashboard', component: AdminPanel, data: { section: 'dashboard' } },
