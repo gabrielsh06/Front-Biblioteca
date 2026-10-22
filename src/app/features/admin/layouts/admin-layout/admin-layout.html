@@ -27,7 +27,7 @@
   <div class="admin-main">
     <header class="admin-header">
       <span>Admin&nbsp; / &nbsp;<strong>Panel administrativo</strong></span>
-      <div class="admin-header__actions"><span>♧</span><button type="button">A&nbsp;&nbsp; Administrador</button><a routerLink="/login">↪&nbsp; Salir</a></div>
+      <div class="admin-header__actions"><span>♧</span><button type="button">A&nbsp;&nbsp; Administrador</button><a routerLink="/login" (click)="logout()">↪&nbsp; Salir</a></div>
     </header>
     <main class="admin-content"><router-outlet></router-outlet></main>
   </div>
