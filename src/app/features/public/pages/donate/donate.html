@@ -1,0 +1,128 @@
+<main class="donate">
+    <div class="donate__container">
+        <header class="donate__header">
+            <p class="donate__eyebrow">Donación de libros</p>
+            <h1 class="donate__title">Comparte un libro,<br /><em>abre otra historia.</em></h1>
+            <p class="donate__description">
+                Registra los datos de tu ejemplar y nos pondremos en contacto para coordinar la entrega.
+                Cada libro donado pasa a formar parte de la biblioteca comunitaria.
+            </p>
+        </header>
+
+        <ol class="donate__steps">
+            <li><strong>1. Registra el libro</strong><span>Cuéntanos qué libro quieres donar y en qué estado está.</span></li>
+            <li><strong>2. Revisamos la donación</strong><span>Confirmamos que el ejemplar puede incorporarse al catálogo.</span></li>
+            <li><strong>3. Coordinamos la entrega</strong><span>Te contactamos para recibirlo en nuestra sede.</span></li>
+        </ol>
+
+        @if (isSubmitted()) {
+            <section class="donate__success">
+                <h2>¡Gracias por tu donación!</h2>
+                <p>
+                    Registramos tu propuesta para <strong>revisión</strong>. Cuando el equipo la evalúe,
+                    nos pondremos en contacto contigo en <strong>{{ form.controls.donorEmail.value }}</strong>
+                    para coordinar la entrega del ejemplar.
+                </p>
+                <button type="button" (click)="startAnother()">Registrar otro libro</button>
+            </section>
+        } @else {
+            <form class="donate__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                <fieldset class="donate__group">
+                    <legend>Datos del libro</legend>
+
+                    <label class="donate__field donate__field--full">
+                        Título
+                        <input type="text" formControlName="title" placeholder="Título del libro" />
+                        @if (form.controls.title.invalid && form.controls.title.touched) {
+                            <span class="donate__error">Ingresa el título del libro.</span>
+                        }
+                    </label>
+
+                    <label class="donate__field">
+                        Autor
+                        <input type="text" formControlName="author" placeholder="Nombre del autor" />
+                        @if (form.controls.author.invalid && form.controls.author.touched) {
+                            <span class="donate__error">Ingresa el autor.</span>
+                        }
+                    </label>
+
+                    <label class="donate__field">
+                        ISBN <small>(opcional)</small>
+                        <input type="text" formControlName="isbn" placeholder="978-XX-XXX-XXXX-X" />
+                    </label>
+
+                    <label class="donate__field">
+                        Categoría
+                        <select formControlName="category">
+                            <option value="">Selecciona una categoría</option>
+                            @for (category of categories; track category.slug) {
+                                <option [value]="category.slug">{{ category.label }}</option>
+                            }
+                        </select>
+                        @if (form.controls.category.invalid && form.controls.category.touched) {
+                            <span class="donate__error">Selecciona una categoría.</span>
+                        }
+                    </label>
+
+                    <label class="donate__field">
+                        Estado del ejemplar
+                        <select formControlName="condition">
+                            <option value="">Selecciona el estado</option>
+                            <option value="EXCELLENT">Excelente</option>
+                            <option value="GOOD">Bueno</option>
+                            <option value="FAIR">Aceptable</option>
+                        </select>
+                        @if (form.controls.condition.invalid && form.controls.condition.touched) {
+                            <span class="donate__error">Selecciona el estado del libro.</span>
+                        }
+                    </label>
+
+                    <label class="donate__field donate__field--full">
+                        Notas <small>(opcional)</small>
+                        <textarea
+                            rows="3"
+                            formControlName="notes"
+                            placeholder="Edición, detalles de la portada, si tiene anotaciones..."></textarea>
+                    </label>
+                </fieldset>
+
+                <fieldset class="donate__group">
+                    <legend>Tus datos</legend>
+
+                    <label class="donate__field">
+                        Nombre completo
+                        <input type="text" formControlName="donorName" placeholder="Nombre y apellidos" />
+                        @if (form.controls.donorName.invalid && form.controls.donorName.touched) {
+                            <span class="donate__error">Ingresa tu nombre.</span>
+                        }
+                    </label>
+
+                    <label class="donate__field">
+                        Correo electrónico
+                        <input type="email" formControlName="donorEmail" placeholder="correo@dominio.com" />
+                        @if (form.controls.donorEmail.invalid && form.controls.donorEmail.touched) {
+                            <span class="donate__error">
+                                @if (form.controls.donorEmail.hasError('required')) {
+                                    Ingresa tu correo.
+                                } @else {
+                                    Ingresa un correo válido.
+                                }
+                            </span>
+                        }
+                    </label>
+                </fieldset>
+
+                @if (errorMessage()) {
+                    <p class="donate__error donate__error--form" role="alert">{{ errorMessage() }}</p>
+                }
+
+                <div class="donate__actions">
+                    <button class="donate__submit" type="submit" [disabled]="isSubmitting()">
+                        {{ isSubmitting() ? 'Enviando…' : 'Registrar donación' }}
+                    </button>
+                    <a class="donate__link" routerLink="/catalogo">Explorar el catálogo</a>
+                </div>
+            </form>
+        }
+    </div>
+</main>

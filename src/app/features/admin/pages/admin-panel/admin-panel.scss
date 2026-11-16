@@ -260,7 +260,7 @@ h2 {
     grid-template-columns: 2.3fr 1.1fr 1.2fr 0.55fr 0.8fr 0.85fr 0.65fr;
 }
 .table--clients {
-    grid-template-columns: 1.5fr 1fr 0.8fr 0.95fr 0.9fr 0.75fr 0.75fr;
+    grid-template-columns: 1.9fr 0.8fr 0.7fr 1fr;
 }
 .table--loans {
     grid-template-columns: 1.25fr 1.35fr 0.9fr 0.9fr 0.75fr 0.7fr 1.2fr;
@@ -431,6 +431,65 @@ h2 {
     color: #fff;
     box-shadow: 0 0.5rem 1.5rem rgba(23, 56, 45, 0.2);
     font-size: 0.78rem;
+}
+.toast--error {
+    background: #b3403a;
+}
+.admin-loading {
+    margin: 0 0 0.5rem;
+    padding: 1rem 2rem;
+    color: #938b81;
+    font-size: 0.78rem;
+}
+.icon-button {
+    padding: 0.2rem 0.4rem;
+    border: 1px solid transparent;
+    border-radius: 0.35rem;
+    background: transparent;
+    color: #b3403a;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.icon-button:hover {
+    border-color: #e3b7b3;
+    background: #ffebea;
+}
+.icon-button--edit {
+    color: #2b7360;
+}
+.icon-button--edit:hover {
+    border-color: #b9d8cc;
+    background: #e7f3ee;
+}
+.icon-button--state {
+    color: #2b7360;
+}
+.icon-button--state:hover:not(:disabled) {
+    border-color: #b9d8cc;
+    background: #e7f3ee;
+}
+.icon-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+.isbn-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.isbn-row input {
+    flex: 1;
+    min-width: 0;
+}
+.isbn-row .secondary-button {
+    white-space: nowrap;
+}
+.form-hint {
+    display: block;
+    margin-top: 0.3rem;
+    color: #948b83;
+    font-size: 0.65rem;
+    font-weight: 400;
 }
 @media (max-width: 950px) {
     .stats-grid {

@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LoginCredentials } from '../../../../shared/models/user.model';
@@ -14,7 +14,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 export class Login {
   private readonly fb = new FormBuilder();
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
+  private readonly auth = inject(AuthService);
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -40,27 +40,19 @@ export class Login {
     this.isSubmitting.set(true);
     this.errorMessage.set('');
 
-    this.authService.login(credentials).subscribe({
-      next: (auth) => {
+    this.auth.login(credentials).subscribe({
+      next: (session) => {
         this.isSubmitting.set(false);
-        this.router.navigateByUrl(auth.role === 'ADMIN' ? '/admin' : '/');
+        void this.router.navigateByUrl(session.role === 'ADMIN' ? '/admin' : '/');
       },
       error: (error: HttpErrorResponse) => {
         this.isSubmitting.set(false);
-        this.errorMessage.set(this.getErrorMessage(error));
+        this.errorMessage.set(
+          error.status === 401
+            ? 'Correo o contraseña incorrectos.'
+            : 'No se pudo iniciar sesión. Intenta de nuevo más tarde.',
+        );
       },
     });
-  }
-
-  private getErrorMessage(error: HttpErrorResponse): string {
-    if (error.status === 0) {
-      return 'No se pudo conectar con el servidor. Intenta nuevamente.';
-    }
-
-    if (error.status === 401 || error.status === 403) {
-      return 'El correo o la contraseña son incorrectos.';
-    }
-
-    return 'No se pudo iniciar sesión. Intenta nuevamente.';
   }
 }

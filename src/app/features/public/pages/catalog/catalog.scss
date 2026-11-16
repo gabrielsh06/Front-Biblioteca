@@ -35,6 +35,52 @@
         line-height: 1.6;
     }
 
+    &__query {
+        margin-bottom: 1rem;
+        color: var(--text-muted);
+    }
+
+    &__notice {
+        margin-bottom: 1rem;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--color-sage, #8aa395);
+        border-radius: 0.5rem;
+        background-color: #eef4ef;
+        color: var(--color-forest, #2c4a3e);
+        font-weight: 600;
+
+        &--error {
+            border-color: #c98b7a;
+            background-color: #fbeeea;
+            color: #8f3524;
+        }
+    }
+
+    &__loading {
+        padding: 2rem 0;
+        color: var(--text-muted);
+    }
+
+    &__more {
+        display: flex;
+        justify-content: center;
+        padding: 2rem 0 0;
+
+        button {
+            padding: 0.8rem 1.4rem;
+            border: 1px solid var(--color-forest, #2c4a3e);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--color-forest, #2c4a3e);
+            font-weight: 700;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #2c4a3e14;
+            }
+        }
+    }
+
     &__mobile-toolbar {
         display: flex;
         gap: 0.75rem;

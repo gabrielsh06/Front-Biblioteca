@@ -1,10 +1,14 @@
-import { Component, output, computed, signal, inject, DestroyRef } from '@angular/core';
+import { Component, computed, signal, inject, DestroyRef } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { firstValueFrom } from 'rxjs';
+import { toBook } from '../../../../shared/mappers/book.mapper';
 import { Book, BOOK_STATUS_LABELS, BOOK_ORIGIN_LABELS } from '../../../../shared/models/book.model';
 import { BookCarousel } from '../../../../shared/components/book-carousel/book-carousel';
-import { BookStorageService } from '../../../../shared/services/book-storage.service';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { BookApiService } from '../../../../shared/services/book-api.service';
+import { LoanService } from '../../../../shared/services/loan.service';
 
 @Component({
     selector: 'app-book-detail',
@@ -15,7 +19,10 @@ import { BookStorageService } from '../../../../shared/services/book-storage.ser
 export class BookDetail {
     private location = inject(Location);
     private route = inject(ActivatedRoute);
-    private bookStorage = inject(BookStorageService);
+    private router = inject(Router);
+    private bookApi = inject(BookApiService);
+    private loanService = inject(LoanService);
+    private auth = inject(AuthService);
     private destroyRef = inject(DestroyRef);
 
     book = signal<Book>({
@@ -26,9 +33,9 @@ export class BookDetail {
     });
     authorBooks = signal<Book[]>([]);
     relatedBooks = signal<Book[]>([]);
-
-    reserve = output<string>();
-    toggleFavoriteEvent = output<string>();
+    isLoading = signal(true);
+    error = signal('');
+    notice = signal('');
 
     isFavorite = signal<boolean>(false);
 
@@ -54,39 +61,88 @@ export class BookDetail {
     }
 
     private async loadBook(bookId: string): Promise<void> {
-        const books = await this.bookStorage.loadBooks();
-        const selectedBook = books.find((book) => book.id === bookId);
+        this.isLoading.set(true);
+        this.error.set('');
 
-        if (!selectedBook) {
-            this.location.back();
-            return;
+        try {
+            const apiBook = await firstValueFrom(this.bookApi.getBook(Number(bookId)));
+            const selectedBook = toBook(apiBook);
+            this.book.set(selectedBook);
+            this.authorBooks.set([]);
+            this.relatedBooks.set([]);
+            this.isFavorite.set(false);
+
+            const [authorPage, relatedPage] = await Promise.allSettled([
+                firstValueFrom(this.bookApi.getBooks({ search: selectedBook.author, size: 12 })),
+                apiBook.category?.length
+                    ? firstValueFrom(this.bookApi.getBooks({ category: apiBook.category[0], size: 12 }))
+                    : Promise.resolve(null),
+            ]);
+
+            this.authorBooks.set(
+                authorPage.status === 'fulfilled'
+                    ? authorPage.value.content
+                        .map(toBook)
+                        .filter((book) => book.id !== selectedBook.id && book.author === selectedBook.author)
+                    : [],
+            );
+
+            this.relatedBooks.set(
+                relatedPage.status === 'fulfilled' && relatedPage.value
+                    ? relatedPage.value.content
+                        .map(toBook)
+                        .filter((book) =>
+                            book.id !== selectedBook.id &&
+                            book.genres?.some((genre) => selectedBook.genres?.includes(genre)),
+                        )
+                    : [],
+            );
+        } catch {
+            this.error.set('No encontramos este libro en el catálogo.');
+        } finally {
+            this.isLoading.set(false);
         }
-
-        this.book.set(selectedBook);
-        this.isFavorite.set(false);
-        this.authorBooks.set(
-            books.filter((book) => book.id !== selectedBook.id && book.author === selectedBook.author),
-        );
-        this.relatedBooks.set(
-            books.filter((book) =>
-                book.id !== selectedBook.id &&
-                book.genres?.some((genre) => selectedBook.genres?.includes(genre)),
-            ),
-        );
     }
 
     onBack(): void {
         this.location.back();
     }
 
+    onCoverError(event: Event): void {
+        const image = event.target as HTMLImageElement;
+        image.src = '/cover-placeholder.svg';
+    }
+
     onFavoriteClick(): void {
         this.isFavorite.update((prev) => !prev);
-        this.toggleFavoriteEvent.emit(this.book().id);
     }
 
     onReserveClick(): void {
-        if (this.isAvailable()) {
-            this.reserve.emit(this.book().id);
+        if (!this.isAvailable()) {
+            return;
         }
+
+        this.reserve(Number(this.book().id));
+    }
+
+    onReserve(bookId: string): void {
+        this.reserve(Number(bookId));
+    }
+
+    private reserve(bookId: number): void {
+        if (!this.auth.isAuthenticated()) {
+            void this.router.navigate(['/login']);
+            return;
+        }
+
+        this.loanService.create(bookId).subscribe({
+            next: () => this.showNotice('Préstamo registrado correctamente.'),
+            error: () => this.showNotice('No se pudo registrar el préstamo.'),
+        });
+    }
+
+    private showNotice(message: string): void {
+        this.notice.set(message);
+        setTimeout(() => this.notice.set(''), 3000);
     }
 }

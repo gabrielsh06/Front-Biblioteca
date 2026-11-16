@@ -153,6 +153,30 @@
     &__error {
         font-size: 0.75rem;
         color: var(--color-terracotta-dark);
+
+        &--form {
+            padding: 0.75rem 1rem;
+            border: 1px solid #c98b7a;
+            border-radius: 0.5rem;
+            background-color: #fbeeea;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+    }
+
+    &__info {
+        padding: 0.85rem 1rem;
+        border: 1px solid #d8c7a5;
+        border-radius: 0.5rem;
+        background-color: #fbf5e6;
+        color: #7a5d21;
+        font-size: 0.8rem;
+        line-height: 1.5;
+
+        code {
+            font-size: 0.75rem;
+            word-break: break-word;
+        }
     }
 
     &__forgot {

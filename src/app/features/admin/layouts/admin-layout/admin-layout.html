@@ -10,13 +10,13 @@
         <span>▦</span> Dashboard
       </a>
       <a class="admin-nav__link" routerLink="/admin/libros" routerLinkActive="admin-nav__link--active">
-        <span>▤</span> Libros <b>25</b>
+        <span>▤</span> Libros <b>{{ bookCount() ?? '—' }}</b>
       </a>
       <a class="admin-nav__link" routerLink="/admin/clientes" routerLinkActive="admin-nav__link--active">
-        <span>♙</span> Clientes <b>7</b>
+        <span>♙</span> Clientes <b>{{ userCount() ?? '—' }}</b>
       </a>
       <a class="admin-nav__link" routerLink="/admin/prestamos" routerLinkActive="admin-nav__link--active">
-        <span>☑</span> Préstamos <b>5</b>
+        <span>☑</span> Préstamos <b>{{ loanCount() ?? '—' }}</b>
       </a>
       <a class="admin-nav__link" routerLink="/admin/donaciones" routerLinkActive="admin-nav__link--active">
         <span>♡</span> Donaciones <b>3</b>
@@ -27,7 +27,11 @@
   <div class="admin-main">
     <header class="admin-header">
       <span>Admin&nbsp; / &nbsp;<strong>Panel administrativo</strong></span>
-      <div class="admin-header__actions"><span>♧</span><button type="button">A&nbsp;&nbsp; Administrador</button><a routerLink="/login" (click)="logout()">↪&nbsp; Salir</a></div>
+      <div class="admin-header__actions">
+        <span>♧</span>
+        <button type="button">{{ auth.displayName() || 'Administrador' }}</button>
+        <button type="button" (click)="logout()">↪&nbsp; Salir</button>
+      </div>
     </header>
     <main class="admin-content"><router-outlet></router-outlet></main>
   </div>

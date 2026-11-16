@@ -1,6 +1,6 @@
 <article class="book-card" [routerLink]="['/books', book().id]">
     <div class="book-card__media">
-        <img [src]="book().coverUrl" [alt]="'Portada de ' + book().title" />
+        <img [src]="book().coverUrl || '/cover-placeholder.svg'" [alt]="'Portada de ' + book().title" (error)="onCoverError($event)" />
     </div>
     <div class="book-card__info">
         <h3 class="book-card__title">{{ book().title }}</h3>

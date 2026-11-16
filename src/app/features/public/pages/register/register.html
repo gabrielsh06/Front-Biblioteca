@@ -1,0 +1,135 @@
+<section class="login">
+    <div class="login__card">
+        <a class="login__brand" routerLink="/">
+            <span class="login__logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true">
+                    <path
+                        fill="currentColor"
+                        d="M96 128C96 92.7 124.7 64 160 64L288 64L288 576L160 576C124.7 576 96 547.3 96 512L96 128zM352 64L480 64C515.3 64 544 92.7 544 128L544 512C544 547.3 515.3 576 480 576L352 576L352 64z"
+                    />
+                </svg>
+            </span>
+            <span class="login__brand-text">Biblioteca <em>Abierta</em></span>
+        </a>
+
+        <h1 class="login__title">Crea tu cuenta</h1>
+        <p class="login__subtitle">Regístrate para reservar libros y registrar tus donaciones.</p>
+
+        <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="login__field">
+                <label class="login__label" for="firstName">Nombre</label>
+                <input
+                    id="firstName"
+                    class="login__input"
+                    type="text"
+                    formControlName="firstName"
+                    placeholder="Tu nombre"
+                    autocomplete="given-name"
+                />
+                @if (form.controls.firstName.invalid && form.controls.firstName.touched) {
+                    <span class="login__error">Ingresa tu nombre.</span>
+                }
+            </div>
+
+            <div class="login__field">
+                <label class="login__label" for="lastName">Apellidos</label>
+                <input
+                    id="lastName"
+                    class="login__input"
+                    type="text"
+                    formControlName="lastName"
+                    placeholder="Tus apellidos"
+                    autocomplete="family-name"
+                />
+                @if (form.controls.lastName.invalid && form.controls.lastName.touched) {
+                    <span class="login__error">Ingresa tus apellidos.</span>
+                }
+            </div>
+
+            <div class="login__field">
+                <label class="login__label" for="email">Correo electrónico</label>
+                <input
+                    id="email"
+                    class="login__input"
+                    type="email"
+                    formControlName="email"
+                    placeholder="tucorreo@ejemplo.com"
+                    autocomplete="email"
+                />
+                @if (form.controls.email.invalid && form.controls.email.touched) {
+                    <span class="login__error">
+                        @if (form.controls.email.hasError('required')) {
+                            Ingresa tu correo electrónico.
+                        } @else if (form.controls.email.hasError('email')) {
+                            Ingresa un correo electrónico válido.
+                        }
+                    </span>
+                }
+            </div>
+
+            <div class="login__field">
+                <label class="login__label" for="password">Contraseña</label>
+                <div class="login__password-wrapper">
+                    <input
+                        id="password"
+                        class="login__input"
+                        [type]="isPasswordVisible() ? 'text' : 'password'"
+                        formControlName="password"
+                        placeholder="Mínimo 6 caracteres"
+                        autocomplete="new-password"
+                    />
+                    <button
+                        class="login__toggle-password"
+                        type="button"
+                        (click)="togglePasswordVisibility()"
+                        [attr.aria-label]="isPasswordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true">
+                            <path
+                                fill="currentColor"
+                                d="M320 176C214 176 122.5 241.4 84.6 334.6C81.9 341.3 81.9 348.8 84.6 355.5C122.5 448.6 214 514 320 514C426 514 517.5 448.6 555.4 355.4C558.1 348.7 558.1 341.2 555.4 334.5C517.5 241.4 426 176 320 176zM320 448.9C258.7 448.9 209 399.2 209 337.9C209 276.6 258.7 226.9 320 226.9C381.3 226.9 431 276.6 431 337.9C431 399.2 381.3 448.9 320 448.9z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                @if (form.controls.password.invalid && form.controls.password.touched) {
+                    <span class="login__error">
+                        @if (form.controls.password.hasError('required')) {
+                            Ingresa una contraseña.
+                        } @else if (form.controls.password.hasError('minlength')) {
+                            La contraseña debe tener al menos 6 caracteres.
+                        }
+                    </span>
+                }
+            </div>
+
+            <div class="login__field">
+                <label class="login__label" for="confirmPassword">Confirma tu contraseña</label>
+                <input
+                    id="confirmPassword"
+                    class="login__input"
+                    [type]="isPasswordVisible() ? 'text' : 'password'"
+                    formControlName="confirmPassword"
+                    placeholder="Repite tu contraseña"
+                    autocomplete="new-password"
+                />
+                @if (form.controls.confirmPassword.touched && form.hasError('passwordsMismatch')) {
+                    <span class="login__error">Las contraseñas no coinciden.</span>
+                }
+            </div>
+
+            @if (errorMessage()) {
+                <p class="login__error login__error--form" role="alert">{{ errorMessage() }}</p>
+            }
+
+            <button class="login__submit" type="submit" [disabled]="isSubmitting()">
+                {{ isSubmitting() ? 'Creando cuenta...' : 'Registrarme' }}
+            </button>
+        </form>
+
+        <p class="login__signup">
+            ¿Ya tienes cuenta?
+            <a routerLink="/login">Inicia sesión</a>
+        </p>
+    </div>
+</section>
