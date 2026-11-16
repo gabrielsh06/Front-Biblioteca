@@ -35,6 +35,25 @@
         margin: 0 auto;
         padding: 1.5rem;
     }
+
+    &__status {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 3rem 0;
+        color: var(--text-muted);
+    }
+
+    &__back {
+        padding: 0.6rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.5rem;
+        background: transparent;
+        color: var(--color-forest);
+        font-weight: $grosor-destacado;
+        cursor: pointer;
+    }
 }
 
 .breadcrumb {
@@ -220,6 +239,16 @@
     &__reservation {
         @extend %flex-column;
         width: 100%;
+    }
+
+    &__notice {
+        margin-top: 0.75rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--color-sage, #8aa395);
+        border-radius: 0.5rem;
+        background-color: #eef4ef;
+        color: var(--color-forest, #2c4a3e);
+        font-weight: 600;
     }
 
     &__status {

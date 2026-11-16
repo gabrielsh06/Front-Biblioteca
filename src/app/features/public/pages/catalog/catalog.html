@@ -8,6 +8,18 @@
             </p>
         </header>
 
+        @if (selectedSearch()) {
+            <p class="catalog__query">
+                Resultados para <strong>“{{ selectedSearch() }}”</strong>
+            </p>
+        }
+        @if (notice()) {
+            <p class="catalog__notice" role="status">{{ notice() }}</p>
+        }
+        @if (error()) {
+            <p class="catalog__notice catalog__notice--error" role="alert">{{ error() }}</p>
+        }
+
         <div class="catalog__mobile-toolbar">
             <button class="catalog__filter-toggle" type="button" (click)="toggleFilters()">
                 <span>Filtros</span>
@@ -94,12 +106,21 @@
                     </label>
                 </div>
 
-                @if (filteredBooks().length > 0) {
+                @if (isLoading()) {
+                    <p class="catalog__loading">Cargando libros…</p>
+                } @else if (filteredBooks().length > 0) {
                     <div class="catalog__grid">
                         @for (book of visibleBooks(); track book.id) {
-                            <app-book-card [book]="book"></app-book-card>
+                            <app-book-card [book]="book" (reserve)="onReserve($event)"></app-book-card>
                         }
                     </div>
+                    @if (hasMore()) {
+                        <div class="catalog__more">
+                            <button type="button" (click)="loadMore()">
+                                Ver más libros ({{ visibleBooks().length }} de {{ filteredBooks().length }})
+                            </button>
+                        </div>
+                    }
                 } @else {
                     <div class="catalog__empty">
                         <h2>No encontramos libros</h2>

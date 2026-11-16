@@ -120,6 +120,22 @@
         padding: 0 1rem;
     }
 
+    &__notice {
+        margin: 1rem 0 0;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--color-sage, #8aa395);
+        border-radius: 0.5rem;
+        background-color: #eef4ef;
+        color: var(--color-forest, #2c4a3e);
+        font-weight: 600;
+
+        &--error {
+            border-color: #c98b7a;
+            background-color: #fbeeea;
+            color: #8f3524;
+        }
+    }
+
     &-categories {
         padding: 2.5rem 0 1rem;
 
