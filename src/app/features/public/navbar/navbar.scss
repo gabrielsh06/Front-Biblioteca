@@ -108,6 +108,14 @@
         white-space: nowrap;
 
         &:hover, &--active { color: var(--text-accent); }
+
+        &--button {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            text-align: left;
+        }
     }
 
     &__donate {
@@ -156,6 +164,24 @@
         border-radius: 999px;
         font-size: 0.84rem;
         text-decoration: none;
+    }
+
+    &__user {
+        display: none;
+        color: var(--text-muted);
+        font-size: 0.84rem;
+        white-space: nowrap;
+    }
+
+    &__logout {
+        display: none;
+        padding: 0.45rem 0.8rem;
+        border: 1px solid var(--color-ink);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text-primary);
+        font-size: 0.84rem;
+        cursor: pointer;
     }
 
     &__menu {
@@ -207,6 +233,7 @@
         &__bar { max-width: 1200px; }
         &__menu { display: none; }
         &__desktop-nav, &__account { display: flex; }
+        &__user, &__logout { display: inline-flex; }
         &__cart { display: inline-grid; }
     }
 }

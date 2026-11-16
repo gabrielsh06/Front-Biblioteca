@@ -15,9 +15,17 @@
                 <a class="breadcrumb__link breadcrumb__link--current">{{ book().title }}</a>
             </div>
         </nav>
+        @if (isLoading()) {
+            <p class="book-detail-page__status">Cargando libro…</p>
+        } @else if (error()) {
+            <div class="book-detail-page__status">
+                <p>{{ error() }}</p>
+                <button class="book-detail-page__back" type="button" (click)="onBack()">Volver al catálogo</button>
+            </div>
+        } @else {
         <article class="book-info">
             <div class="book-info__media">
-                <img class="book-info__cover" [src]="book().coverUrl" [alt]="'Portada del libro ' + book().title">
+                <img class="book-info__cover" [src]="book().coverUrl || '/cover-placeholder.svg'" [alt]="'Portada del libro ' + book().title" (error)="onCoverError($event)">
                 <p class="book-info__origin">{{ originText() }}</p>
                 <button
                     class="book-info__favorite"
@@ -54,7 +62,7 @@
                 <hr class="book-info__divider">
                 <div class="book-info__body">
                     <h2 class="book-info__synopsis">Sinopsis</h2>
-                    <p class="book-info__description">{{ book().synopsis }}</p>
+                    <p class="book-info__description">{{ book().synopsis || 'Sinopsis no disponible.' }}</p>
                 </div>
             </div>
             <div class="book-info__aside">
@@ -79,6 +87,9 @@
                         </svg>
                         Reservar este libro
                     </button>
+                    @if (notice()) {
+                        <p class="book-info__notice" role="status">{{ notice() }}</p>
+                    }
                 </div>
                 <hr class="book-info__divider">
                 <section class="book-info__specs">
@@ -151,14 +162,17 @@
                 <app-book-carousel
                     [title]="'Más libros de ' + book().author"
                     [books]="authorBooks()"
+                    (reserveEvent)="onReserve($event)"
                 />
             }
             @if (relatedBooks().length > 0) {
                 <app-book-carousel
                     [title]="'También te podría interesar'"
                     [books]="relatedBooks()"
+                    (reserveEvent)="onReserve($event)"
                 />
             }
         </section>
+        }
     </div>
 </main>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" role="img" aria-labelledby="title">
+    <title id="title">Portada no disponible</title>
+    <rect width="300" height="420" fill="#e7e1d5"/>
+    <rect x="24" y="24" width="252" height="372" fill="none" stroke="#c4b9a5" stroke-width="2" rx="6"/>
+    <g fill="#8b7f6c">
+        <path d="M96 170c0-8.8 7.2-16 16-16h32v140h-32c-8.8 0-16-7.2-16-16V170zm60-16h32c8.8 0 16 7.2 16 16v108c0 8.8-7.2 16-16 16h-32V154z"/>
+        <text x="150" y="320" font-family="Georgia, serif" font-size="16" text-anchor="middle">Sin portada</text>
+    </g>
+</svg>

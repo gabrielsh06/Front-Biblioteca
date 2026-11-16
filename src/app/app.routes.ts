@@ -6,7 +6,13 @@ import { Home } from './features/public/pages/home/home';
 import { Login } from './features/public/pages/login/login';
 import { BookDetail } from './features/public/pages/book-detail/book-detail';
 import { Catalog } from './features/public/pages/catalog/catalog';
+import { MyLoans } from './features/public/pages/my-loans/my-loans';
+import { Donate } from './features/public/pages/donate/donate';
+import { Register } from './features/public/pages/register/register';
+import { ForgotPassword } from './features/public/pages/forgot-password/forgot-password';
+import { ResetPassword } from './features/public/pages/reset-password/reset-password';
 import { adminGuard } from './shared/guards/admin.guard';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -24,12 +30,45 @@ export const routes: Routes = [
             {
                 path: 'catalogo',
                 component: Catalog
+            },
+            {
+                path: 'mis-prestamos',
+                component: MyLoans,
+                canActivate: [authGuard]
+            },
+            {
+                path: 'donar',
+                component: Donate
             }
         ]
     },
     { 
         path: 'login', 
         component: Login 
+    },
+    {
+        path: 'registro',
+        component: Register
+    },
+    {
+        path: 'recuperar-password',
+        component: ForgotPassword
+    },
+    {
+        path: 'restablecer-password',
+        component: ResetPassword
+    },
+    {
+        path: 'restablecer-password/:token',
+        component: ResetPassword
+    },
+    {
+        path: 'reset-password',
+        component: ResetPassword
+    },
+    {
+        path: 'reset-password/:token',
+        component: ResetPassword
     },
     { 
         path: 'admin', 

@@ -1,0 +1,75 @@
+<main class="my-loans">
+    <div class="my-loans__container">
+        <header class="my-loans__header">
+            <p class="my-loans__eyebrow">Tu actividad</p>
+            <h1 class="my-loans__title">Mis préstamos</h1>
+            <p class="my-loans__description">
+                Revisa los libros que tienes en préstamo, sus fechas de vencimiento y registra tus devoluciones.
+            </p>
+        </header>
+
+        @if (notice()) {
+            <p class="my-loans__notice" role="status">{{ notice() }}</p>
+        }
+        @if (error()) {
+            <p class="my-loans__notice my-loans__notice--error" role="alert">{{ error() }}</p>
+        }
+
+        @if (isLoading()) {
+            <p class="my-loans__status">Cargando tus préstamos…</p>
+        } @else if (loans().length === 0) {
+            <div class="my-loans__empty">
+                <h2>Todavía no tienes préstamos</h2>
+                <p>Explora el catálogo y reserva el próximo libro que quieras leer.</p>
+                <a class="my-loans__action" routerLink="/catalogo">Ir al catálogo</a>
+            </div>
+        } @else {
+            <div class="my-loans__grid">
+                @for (loan of loans(); track loan.id) {
+                    <article class="loan-card" [class.loan-card--overdue]="loan.status === 'OVERDUE'">
+                        <header class="loan-card__header">
+                            <div>
+                                <p class="loan-card__label">Libro</p>
+                                <h2 class="loan-card__title">
+                                    <a [routerLink]="['/books', loan.bookId]">{{ loan.bookTitle }}</a>
+                                </h2>
+                            </div>
+                            <span
+                                class="loan-card__status"
+                                [class.loan-card__status--active]="loan.status === 'ACTIVE'"
+                                [class.loan-card__status--overdue]="loan.status === 'OVERDUE'"
+                                [class.loan-card__status--returned]="loan.status === 'RETURNED'">
+                                {{ statusLabel(loan.status) }}
+                            </span>
+                        </header>
+
+                        <dl class="loan-card__dates">
+                            <div>
+                                <dt>Fecha de préstamo</dt>
+                                <dd>{{ formatDate(loan.loanDate) }}</dd>
+                            </div>
+                            <div>
+                                <dt>Fecha límite</dt>
+                                <dd>{{ formatDate(loan.dueDate) }}</dd>
+                            </div>
+                            <div>
+                                <dt>Devolución</dt>
+                                <dd>{{ formatDate(loan.returnedDate) }}</dd>
+                            </div>
+                        </dl>
+
+                        @if (canReturn(loan)) {
+                            <button
+                                class="loan-card__button"
+                                type="button"
+                                [disabled]="processingId() === loan.id"
+                                (click)="returnLoan(loan)">
+                                {{ processingId() === loan.id ? 'Procesando…' : 'Devolver libro' }}
+                            </button>
+                        }
+                    </article>
+                }
+            </div>
+        }
+    </div>
+</main>

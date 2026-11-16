@@ -35,4 +35,9 @@ export class BookCard {
             this.reserve.emit(this.book().id);
         }
     }
+
+    onCoverError(event: Event): void {
+        const image = event.target as HTMLImageElement;
+        image.src = '/cover-placeholder.svg';
+    }
 }
