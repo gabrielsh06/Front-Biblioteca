@@ -1,12 +1,20 @@
 export interface User {
-    id: string;
-    fullName: string;
+    id: number;
+    firstName: string;
+    lastName: string;
     email: string;
-    role: 'reader' | 'admin';
+    role: 'CUSTOMER' | 'ADMIN';
 }
 
-// Datos que envía el formulario de login (PROJ-13 - Agregar componente login).
 export interface LoginCredentials {
     email: string;
     password: string;
+}
+
+export interface AuthResponse {
+    token: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    role: 'CUSTOMER' | 'ADMIN';
 }
